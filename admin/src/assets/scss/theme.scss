@@ -1,0 +1,40 @@
+//全局主题样式
+//新增按钮
+.el-icon-plus {
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 6px;
+}
+//搜索
+.el-icon-search {
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 6px;
+}
+//分割线
+.el-divider {
+  margin-top: 0;
+}
+//表格按钮
+.button-info {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+}
+//模太狂
+.el-dialog__header {
+  background-color: #00b3d1;
+  color: #ffffff;
+  padding: 0 20px;
+  height: 44px;
+  line-height: 44px;
+}
+.el-dialog__body {
+  padding-bottom: 0;
+}
+.el-dialog__footer {
+  text-align: center;
+}
