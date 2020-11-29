@@ -1,44 +1,56 @@
 const Koa = require('koa')
-const app = new Koa()
+const koaBody = require('koa-body')
+const static = require('koa-static')
 const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
+const cors = require('koa2-cors')
+const helmet = require("koa-helmet")
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+const config = require('./config')
+const publicRouter = require('./routes/public')
+const privateRouter = require('./routes/private')
+const viewRouter = require('./routes/view')
+const { loggerMiddleware } = require('./middlewares/logger')
+const { errorHandler, responseHandler } = require('./middlewares/response')
+const { corsHandler } = require('./middlewares/cors')
 
-// error handler
-onerror(app)
+const app = new Koa()
 
-// middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+// Logger
+app.use(loggerMiddleware)
+
+// Error Handler
+app.use(errorHandler)
+
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    keepExtensions: true,
+    maxFieldsSize: 10 * 1024 * 1024
+  }
 }))
-app.use(json())
-app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
 
-app.use(views(__dirname + '/views', {
-  extension: 'ejs'
-}))
+// Static
+app.use(static(config.publicDir))
 
-// logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
+// Helmet
+app.use(helmet())
 
-// routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+// Cors
+app.use(cors(corsHandler))
 
-// error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
-});
+//View
+app.use(views(config.viewsDir))
+app.use(static(config.viewsDir))
+
+// Routes
+app.use(publicRouter.routes(), publicRouter.allowedMethods())
+app.use(viewRouter.routes(), viewRouter.allowedMethods())
+app.use(privateRouter.routes(), privateRouter.allowedMethods())
+
+
+// Response
+app.use(responseHandler)
+
+
 
 module.exports = app
