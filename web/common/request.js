@@ -14,8 +14,19 @@ export function globalRequest(url, data, method) {
 			dataType: 'json',
 			header: headers,
 			success(res) {
-				if (res.statusCode === 200) resolve(res.data)
-				else resolve(res.data)
+				if (res.statusCode === 200) {
+					if(res.data.code !== 200){
+						uni.showTost({
+							title:res.data.msg,
+							icon:'error',
+							duration:2000,
+							mask:false
+						})
+					}else{
+						resolve(res.data)
+					}
+				}
+				else reject(res.data)
 			},
 			error(e) {
 				reject('网络出错');

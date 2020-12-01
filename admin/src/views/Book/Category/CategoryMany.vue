@@ -38,24 +38,24 @@ export default {
     type: Boolean,
     form: Object,
     checkList: Array,
-    label:Array
+    label: Array
   },
   watch: {
-    form() {
+    form () {
       this.ruleForm = this.form
-    },
+    }
   },
-  data() {
+  data () {
     return {
       // label: [],
-      radio: [],
+      radio: []
     }
   },
   methods: {
-    async submitForm() {
+    async submitForm () {
       const req = {
         list: this.checkList,
-        code: this.radio,
+        code: this.radio
       }
       const res = await api_categoryAss(req).catch((err) =>
         this.$message.error(err.msg)
@@ -65,9 +65,9 @@ export default {
         this.handleClose()
       }
     },
-    handleClose() {
+    handleClose () {
       this.$emit('close')
-    },
+    }
     // openDialog() {
     //   api_categoryMany()
     //     .then((res) => {
@@ -77,7 +77,7 @@ export default {
     //       this.$message.error(err.msg)
     //     })
     // },
-  },
+  }
 }
 </script>
 

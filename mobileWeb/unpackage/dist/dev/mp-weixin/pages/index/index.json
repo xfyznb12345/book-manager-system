@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "bottom": "/components/bottom",
+    "mine": "/pages/mine/mine"
+  }
+}

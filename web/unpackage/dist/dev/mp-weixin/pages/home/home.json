@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "component": true,
+  "usingComponents": {
+    "banner": "/components/banner/banner",
+    "img-list": "/components/imglist/imglist",
+    "img-list-two": "/components/imglisttwo/imglisttwo"
+  }
 }

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "img-list": "/components/imglist/imglist",
+    "img-list-two": "/components/imglisttwo/imglisttwo"
+  }
+}

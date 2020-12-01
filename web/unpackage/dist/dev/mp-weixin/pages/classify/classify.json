@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-tabs-swiper": "/node-modules/uview-ui/components/u-tabs-swiper/u-tabs-swiper",
+    "classify-tab-one": "/pages/classifyTabOne/classifyTabOne",
+    "classify-tab-tow": "/pages/classifyTabTow/classifyTabTow",
+    "classify-tab-three": "/pages/classifyTabThree/classifyTabThree",
+    "classify-tab-four": "/pages/classifyTabFour/classifyTabFour"
+  }
+}

@@ -1,36 +1,35 @@
 import axios from 'axios'
 import Vue from 'vue'
 
-//超时
-axios.defaults.timeout = 3000;
+// 超时
+axios.defaults.timeout = 3000
 
-//post请求头
+// post请求头
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
-//请求拦截器
+// 请求拦截器
 axios.interceptors.request.use(
-  config=>{
+  config => {
     const token = localStorage.getItem('book_token')
     token && (config.headers.Authorization = token)
     return config
   },
-  error=>{
+  error => {
     return Promise.reject(error)
   }
 )
 
 // 响应拦截器
 axios.interceptors.response.use(res => {
-  if (res.data.code === 200){
+  if (res.data.code === 200) {
     return Promise.resolve(res.data)
-  }else{
+  } else {
     return Promise.reject(res.data)
   }
 }, err => {
   if (err.response.status === 500) {
     Vue.prototype.$message.error('服务器内部错误')
-  } 
-  else if (err.response.data) {
+  } else if (err.response.data) {
     Vue.prototype.$message.error(err.response.data)
   }
   return Promise.reject(err)

@@ -1,0 +1,285 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* uni.scss */
+/* 颜色变量 */
+/* 主要颜色 */
+/* 文本颜色 */
+/* 其它颜色 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/* 页面左右间距 */
+/* 文字尺寸 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+.books-body.data-v-521b14c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.books-left.data-v-521b14c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 160rpx;
+  max-width: 160rpx;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+}
+.books-right.data-v-521b14c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  overflow-y: auto;
+  min-width: calc(100% - 160rpx);
+  max-width: calc(100% - 160rpx);
+}
+.books-right .books-screen.data-v-521b14c4 {
+  height: 80rpx;
+  width: 100%;
+  background-color: #fff;
+  padding: 0 30rpx;
+}
+.books-right .books-screen .amount.data-v-521b14c4 {
+  font-size: 24rpx;
+  color: #666777;
+  line-height: 80rpx;
+}
+.books-right .books-screen .amount .screen-span.data-v-521b14c4 {
+  float: right;
+  height: 50rpx;
+  line-height: 46rpx;
+  font-size: 22rpx;
+  border: 2rpx solid #EAEAEA;
+  padding: 0 24rpx;
+  -webkit-border-radius: 52rpx;
+          border-radius: 52rpx;
+  color: #333333;
+  margin-top: 15rpx;
+}
+.books-right .bookrack-body.data-v-521b14c4 {
+  height: calc(100% - 80rpx);
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 40rpx;
+}
+.books-right .books-box.data-v-521b14c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  height: 216rpx;
+  padding: 20rpx 30rpx 20rpx 30rpx;
+}
+.books-right .books-image.data-v-521b14c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 152rpx;
+  max-width: 152rpx;
+  height: 176rpx;
+  position: relative;
+  z-index: 10;
+}
+.books-right .books-image .book-img.data-v-521b14c4 {
+  width: 132rpx;
+  height: 176rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  overflow: auto;
+  background-color: #eaeaea;
+}
+.books-right .ripple.data-v-521b14c4 {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  z-index: -5;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+          box-shadow: 0 0 0px 500px #EEEEEE;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  -webkit-animation: myfirst-data-v-521b14c4 0.6s;
+          animation: myfirst-data-v-521b14c4 0.6s;
+  opacity: 0.6;
+}
+.books-right .books-text.data-v-521b14c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  padding: 4rpx 0;
+  position: relative;
+  z-index: 10 !important;
+}
+.books-right .books-text .text-box.data-v-521b14c4 {
+  height: 138rpx;
+}
+.books-right .books-text .books-head.data-v-521b14c4 {
+  font-size: 28rpx;
+  line-height: 36rpx;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10rpx;
+}
+.books-right .books-text .books-describe.data-v-521b14c4 {
+  color: #666777;
+  font-size: 26rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.books-right .books-text .books-author.data-v-521b14c4 {
+  color: #666777;
+  font-size: 26rpx;
+  line-height: 30rpx;
+  height: 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.left-list.data-v-521b14c4 {
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666777;
+}
+.left-list .vertical-bar.data-v-521b14c4 {
+  display: none;
+  height: 60rpx;
+  width: 8rpx;
+  background-color: #0086E7;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  float: left;
+  margin-top: 30rpx;
+}
+.books-left-active.data-v-521b14c4 {
+  color: #0086E7;
+  background-color: #fff;
+  padding-right: 8rpx;
+}
+.books-left-active .vertical-bar.data-v-521b14c4 {
+  display: block;
+}
+.bookrack-body.data-v-521b14c4::-webkit-scrollbar {
+  display: none !important;
+}
+@-webkit-keyframes myfirst-data-v-521b14c4 {
+from {
+    -webkit-box-shadow: 0 0 0px 30px #EEEEEE;
+            box-shadow: 0 0 0px 30px #EEEEEE;
+    opacity: 1;
+}
+to {
+    -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+            box-shadow: 0 0 0px 500px #EEEEEE;
+    opacity: 0.5;
+}
+}
+@keyframes myfirst-data-v-521b14c4 {
+from {
+    -webkit-box-shadow: 0 0 0px 30px #EEEEEE;
+            box-shadow: 0 0 0px 30px #EEEEEE;
+    opacity: 1;
+}
+to {
+    -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+            box-shadow: 0 0 0px 500px #EEEEEE;
+    opacity: 0.5;
+}
+}
+.filtrate.data-v-521b14c4 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.filtrate .shade.data-v-521b14c4 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.filtrate .label.data-v-521b14c4 {
+  width: 100%;
+  padding: 20rpx 30rpx 40rpx 30rpx;
+  background-color: #fff;
+  position: absolute;
+  z-index: 200;
+}
+.filtrate .label .label-list.data-v-521b14c4 {
+  padding: 30rpx 0 10rpx 0;
+  color: #666777;
+  font-size: 24rpx;
+}
+.filtrate .label .label-list .pack.data-v-521b14c4 {
+  color: #0086E7;
+  float: right;
+}
+.filtrate .label .label-list .pack .pack-up.data-v-521b14c4 {
+  font-size: 24rpx;
+  margin-left: 4rpx;
+  display: inline-table;
+}
+.filtrate .label .label-list .label-boxs.data-v-521b14c4 {
+  padding: 0 10rpx;
+}
+.filtrate .label .label-list .label-boxs .label-span.data-v-521b14c4 {
+  font-size: 26rpx;
+  color: #666777;
+  display: inline-block;
+  height: 56rpx;
+  line-height: 56rpx;
+  padding: 0 40rpx;
+  margin: 30rpx 30rpx 0 0;
+  background-color: #f7f7f7;
+  -webkit-border-radius: 56rpx;
+          border-radius: 56rpx;
+}
+.filtrate .label .label-list .label-boxs .label-active.data-v-521b14c4 {
+  color: #0086E7;
+  background-color: #ECF3FD;
+}
+

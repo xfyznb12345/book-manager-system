@@ -1,3 +1,15 @@
 {
-  "usingComponents": {}
+  "navigationBarBackgroundColor": "#fff",
+  "backgroundColor": "#fff",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-navbar": "/node-modules/uview-ui/components/u-navbar/u-navbar",
+    "bottom": "/components/bottom/bottom",
+    "home": "/pages/home/home",
+    "classify": "/pages/classify/classify",
+    "bookrack": "/pages/bookrack/bookrack",
+    "search": "/pages/search/search",
+    "mine": "/pages/mine/mine"
+  }
 }

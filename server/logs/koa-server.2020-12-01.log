@@ -1,0 +1,22 @@
+[2020-12-01T18:53:34.112] [INFO] [Default] - Models created
+[2020-12-01T18:53:34.121] [INFO] [Default] - Services created
+[2020-12-01T18:53:34.171] [INFO] [Default] - Controllers mapped
+[2020-12-01T18:53:34.173] [INFO] [Default] - Public routes registered
+[2020-12-01T18:53:34.242] [INFO] [Default] - Private routes registered
+[2020-12-01T18:53:34.250] [INFO] [Default] - Listening on port 3000 ...
+[2020-12-01T18:53:34.265] [INFO] [Default] - Connected to database: mongodb://127.0.0.1:27017/node-vue-book
+[2020-12-01T18:53:34.267] [INFO] [Default] - MongoDB is opened
+[2020-12-01T19:02:27.582] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 4ms
+[2020-12-01T19:02:27.661] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"xfyznb12345","passWord":"xfyznb12345"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 45ms
+[2020-12-01T19:03:24.345] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 0ms
+[2020-12-01T19:03:24.610] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":200,"msg":"success","data":{"userInfo":{"id":"5fc622fc7dc7927224733af7","userName":"testxfy"}}} - ::1 - 261ms
+[2020-12-01T19:04:39.587] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 1ms
+[2020-12-01T19:04:39.595] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 3ms
+[2020-12-01T19:05:53.813] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 0ms
+[2020-12-01T19:05:53.820] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 4ms
+[2020-12-01T19:09:58.742] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 0ms
+[2020-12-01T19:09:58.750] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 4ms
+[2020-12-01T19:10:16.471] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 0ms
+[2020-12-01T19:10:16.477] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 2ms
+[2020-12-01T19:11:58.414] [INFO] [Default] - OPTIONS 204 /api/register 请求参数： {}  响应参数： undefined - ::1 - 0ms
+[2020-12-01T19:11:58.424] [INFO] [Default] - POST 200 /api/register 请求参数： {"userName":"testxfy","passWord":"Dtest@123"}  响应参数： {"code":-1,"msg":"用户已存在","data":null} - ::1 - 7ms

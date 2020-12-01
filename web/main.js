@@ -1,18 +1,21 @@
 import Vue from 'vue'
 import App from './App'
-import cuCustom from './colorui/components/cu-custom.vue'
 import uView from "uview-ui";
+import http from './common/http.js'
 import request from './common/request.js'
-import api from './common/http.js'
-Vue.component('cu-custom', cuCustom)
-Vue.config.productionTip = false
-Vue.use(uView);
+import store from './store'
 
+
+Vue.prototype.$api = http
 Vue.prototype.$request = request
-Vue.prototype.$api = api
-
+//把vuex定义成全局组件
+Vue.prototype.$store = store
+Vue.use(uView);
+Vue.config.productionTip = false
 App.mpType = 'app'
+
 const app = new Vue({
-	...App
+    ...App,
+		store
 })
 app.$mount()

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "登录",
+  "navigationBarBackgroundColor": "#fff",
+  "backgroundColor": "#fff",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "w-input": "/components/watch-login/watch-input",
+    "w-button": "/components/watch-login/watch-button"
+  }
+}

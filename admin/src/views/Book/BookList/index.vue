@@ -72,7 +72,7 @@ import {
   api_bookList,
   api_categoryDelete,
   api_categoryEdit,
-  api_categoryInfo,
+  api_categoryInfo
 } from '../../../api/api'
 export default {
   components: {
@@ -80,103 +80,103 @@ export default {
     Table,
     BookInfo
   },
-  data() {
+  data () {
     return {
       value: true,
       optForm: {
-        keyWords: '',
+        keyWords: ''
       },
       optFormLabel: [
         {
           model: 'keyWords',
           point: '书名/作者',
           style: 'width:200px',
-          del: true,
-        },
+          del: true
+        }
       ],
-      addDialog: false, //新增框
-      passwordDialog: false, //密码重置框
-      manyDialog: false, //批量
-      infoDialog:false,
-      infoId:'',
+      addDialog: false, // 新增框
+      passwordDialog: false, // 密码重置框
+      manyDialog: false, // 批量
+      infoDialog: false,
+      infoId: '',
       tableData: [],
       tableLabel: [
         {
           prop: 'title',
-          label: '书名',
+          label: '书名'
         },
         {
           prop: 'author',
-          label: '作者',
+          label: '作者'
         },
         {
           prop: 'press',
-          label: '出版社',
+          label: '出版社'
         },
         {
           prop: 'code',
-          label: '图书分类号',
+          label: '图书分类号'
         },
         {
           prop: 'date',
-          label: '出版年月',
-        },
+          label: '出版年月'
+        }
       ],
       config: {
         page: 1,
         pageSize: 15,
         total: 30,
-        type: true,
+        type: true
       },
       type: false,
       ruleForm: {},
-      checkList: [],
+      checkList: []
     }
   },
   methods: {
-    //获取选择列表
-    getCheckList(list) {
+    // 获取选择列表
+    getCheckList (list) {
       this.checkList = list.map((val) => {
         return val._id
       })
     },
-    openDialog() {
+    openDialog () {
       if (this.checkList.length > 0) this.manyDialog = true
       else this.$message.warning('至少选择一条')
     },
-    getTableList(page) {
-      //初始化
+    getTableList (page) {
+      // 初始化
       if (this.infoDialog) this.infoDialog = false
-      if(page) this.config.page =page
+      if (page) this.config.page = page
       const req = {
         keyWords: this.optForm.keyWords,
         pageNum: this.config.page,
-        pageSize: this.config.pageSize,
+        pageSize: this.config.pageSize
       }
       api_bookList(req).then((res) => {
         this.tableData = res.list
         this.config.total = res.count
       })
     },
-    //详情
-    handleInfo(row){
+    // 详情
+    handleInfo (row) {
       this.infoId = row._id
       this.infoDialog = true
     },
-    //编辑
-    handleEdit(row) {
+    // 编辑
+    handleEdit (row) {
       this.type = true
       api_categoryInfo(row._id).then((res) => {
         this.ruleForm = res
       })
       this.addDialog = true
     },
-    handle(row) {
+    handle (row) {
       api_categoryEdit(row._id, row).then((res) => {
         if (res.message === 'success') this.$message.success('操作成功')
       })
     },
-    handleDel(row) {
+    handleDel (row) {
       api_categoryDelete(row._id).then((res) => {
         if (res.success) {
           this.$message.success('删除成功')
@@ -184,20 +184,20 @@ export default {
         }
       })
     },
-    //切换pageSize
-    changeSize(pageSize) {
+    // 切换pageSize
+    changeSize (pageSize) {
       this.config.pageSize = pageSize
       this.getTableList()
     },
-    //切换page
-    changePage(page) {
+    // 切换page
+    changePage (page) {
       this.config.page = page
       this.getTableList()
-    },
+    }
   },
-  created() {
+  created () {
     this.getTableList()
-  },
+  }
 }
 </script>
 

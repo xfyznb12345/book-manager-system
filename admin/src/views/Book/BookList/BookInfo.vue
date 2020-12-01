@@ -54,15 +54,15 @@ import { api_bookInfo } from '../../../api/api'
 export default {
   props: {
     showDialog: Boolean,
-    id: String,
+    id: String
   },
-  data() {
+  data () {
     return {
-      tableData: [],
+      tableData: []
     }
   },
   methods: {
-    openDialog() {
+    openDialog () {
       api_bookInfo({ id: this.id })
         .then((res) => {
           this.tableData = res
@@ -71,10 +71,10 @@ export default {
           this.$message.error(err.msg)
         })
     },
-    handleClose() {
+    handleClose () {
       this.$emit('close')
-    },
-  },
+    }
+  }
 }
 </script>
 

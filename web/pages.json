@@ -4,54 +4,38 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index"
+			"path": "pages/index/index",
+			"style": {
+				// "navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#fff",
+				"backgroundColor": "#fff",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
 		},
 		{
-			"path":"pages/book/book"
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarBackgroundColor": "#fff",
+				"backgroundColor": "#fff",
+				"enablePullDownRefresh": false
+			}
 		},
 		{
-			"path":"pages/new/new"
-		},
-		{
-			"path":"pages/home/home"
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationBarBackgroundColor": "#fff",
+				"backgroundColor": "#fff",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "咩咩好书",
-		"navigationBarBackgroundColor": "#8dc63f",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	},
-	"tabBar": {
-		"color": "#8799a3",
-		"selectedColor": "#8dc63f",
-		"backgroundColor": "#FFFFFF",
-		"borderStyle": "black",
-		"height":"48px",
-		"list": [{
-				"pagePath": "pages/index/index",
-				"iconPath": "/static/index.png",
-				"selectedIconPath": "static/index_cur.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/book/book",
-				"iconPath": "static/book.png",
-				"selectedIconPath": "static/book_cur.png",
-				"text": "书单"
-			},
-			{
-				"pagePath": "pages/new/new",
-				"iconPath": "static/new.png",
-				"selectedIconPath": "static/new_cur.png",
-				"text": "动态"
-			},
-			{
-				"pagePath": "pages/home/home",
-				"iconPath": "static/home.png",
-				"selectedIconPath": "static/home_cur.png",
-				"text": "我的"
-			}
-		]
 	}
 }

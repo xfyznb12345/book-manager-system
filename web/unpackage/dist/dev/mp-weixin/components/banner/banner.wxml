@@ -1,0 +1,1 @@
+<view class="banner-box data-v-6f413278"><view class="wrap data-v-6f413278"><u-swiper class="banner-bg data-v-6f413278" vue-id="438df2c2-1" duration="{{1000}}" height="{{300}}" interval="{{4000}}" list="{{banner}}" bind:__l="__l"></u-swiper></view></view>

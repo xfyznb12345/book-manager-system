@@ -78,44 +78,44 @@ export default {
   props: {
     showDialog: Boolean,
     type: Boolean,
-    form: Object,
+    form: Object
   },
   watch: {
-    form() {
+    form () {
       this.ruleForm = this.form
-    },
+    }
   },
-  data() {
+  data () {
     return {
       ruleForm: {
         name: '',
         keyWords: [],
         status: true,
         icon: '',
-        remarks: '',
+        remarks: ''
       },
       rules: {
         name: [
           { required: true, message: '请输入分类名称', trigger: 'blur' },
-          { min: 2, max: 7, message: '长度在 3 到 7 个字符', trigger: 'blur' },
-        ],
+          { min: 2, max: 7, message: '长度在 3 到 7 个字符', trigger: 'blur' }
+        ]
       },
-      inputValue: '', //新增的tag标签
-      upload: upload,
+      inputValue: '', // 新增的tag标签
+      upload: upload
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.type) {
-            //编辑
+            // 编辑
             api_categoryEdit(this.ruleForm._id, this.ruleForm).then((res) => {
               if (res.message === 'success') this.$message.success('修改成功')
               this.handleClose(formName)
             })
           } else {
-            //新增
+            // 新增
             api_categoryAdd(this.ruleForm).then((res) => {
               if (res.message === 'success') this.$message.success('新建成功')
               this.handleClose(formName)
@@ -126,22 +126,22 @@ export default {
         }
       })
     },
-    handleClose(formName) {
+    handleClose (formName) {
       this.$refs[formName].resetFields()
       this.$emit('close')
     },
-    //添加tag
-    addTag() {
+    // 添加tag
+    addTag () {
       if (this.inputValue) {
         this.ruleForm.keyWords.push(this.inputValue)
       }
-      this.inputValue = '' //清空
+      this.inputValue = '' // 清空
     },
-    //删除tag
-    closeTag(tag) {
+    // 删除tag
+    closeTag (tag) {
       this.ruleForm.keyWords.splice(this.ruleForm.keyWords.indexOf(tag), 1)
-    },
-  },
+    }
+  }
 }
 </script>
 
