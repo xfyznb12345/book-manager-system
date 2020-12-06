@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#fff",
+  "backgroundColor": "#fff",
+  "usingComponents": {
+    "u-rate": "/node-modules/uview-ui/components/u-rate/u-rate",
+    "u-read-more": "/node-modules/uview-ui/components/u-read-more/u-read-more"
+  }
+}

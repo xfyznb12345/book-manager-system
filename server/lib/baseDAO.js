@@ -27,10 +27,11 @@ class BaseDAO {
   /**
    * 条件查询，多个结果
    * @param {Object} condition 查询条件
+   * @param {Object} back 返回结果筛选
    * @return {Array} 查询结果
    */
-  async findMany (condition) {
-    const result = await this.model.find(condition)
+  async findMany (condition,back) {
+    const result = await this.model.find(condition,back)
     return result
   }
   /**
@@ -58,6 +59,19 @@ class BaseDAO {
       .skip((parseInt(pageNum) - 1) * pageSize)
       .limit(parseInt(pageSize))
     return result
+  }
+  /**
+   * 条件查询，多个结果，分页，自定义返回结果
+   * @param {Object} condition 查询条件
+   * @param {Object} back 返回结果筛选
+   * @return {Array} 查询结果 count list 
+   */
+  async findManyPageList (condition, back, pageNum = 1, pageSize = 10) {
+    const count = await this.model.countDocuments(condition)
+    const list = await this.model.find(condition, back)
+      .skip((parseInt(pageNum) - 1) * pageSize)
+      .limit(parseInt(pageSize))
+    return { count, list }
   }
   /**
    * 分页查询
@@ -148,6 +162,10 @@ class BaseDAO {
   async update (condition, data, options) {
     const result = await this.model.updateMany(condition, data, options)
     return result
+  }
+  async test () {
+    const list = await this.model.find({}, { code: 1, _id: 0 }).distinct('code')
+    return list
   }
 }
 

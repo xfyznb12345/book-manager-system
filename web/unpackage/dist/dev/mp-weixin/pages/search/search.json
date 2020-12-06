@@ -1,5 +1,7 @@
 {
-  "component": true,
+  "navigationBarTitleText": "搜索",
+  "navigationBarBackgroundColor": "#fff",
+  "backgroundColor": "#fff",
   "usingComponents": {
     "img-list": "/components/imglist/imglist",
     "img-list-two": "/components/imglisttwo/imglisttwo"

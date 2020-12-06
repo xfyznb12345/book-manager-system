@@ -26,7 +26,9 @@
 	let _this;
 	import wInput from '../../components/watch-login/watch-input.vue' //input
 	import wButton from '../../components/watch-login/watch-button.vue' //button
-
+	import {
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -44,11 +46,12 @@
 			_this = this;
 		},
 		methods: {
+			...mapMutations(['login']),
 			isShowAgree() {
 				//是否选择协议
 				_this.showAgree = !_this.showAgree;
 			},
-			startReg() {
+			async startReg() {
 				//注册
 				if (this.isRotate) {
 					//判断是否加载中，避免重复点击请求
@@ -77,12 +80,21 @@
 				}
 				_this.isRotate = true
 				const req = {
-					userName:this.userName,
-					passWord:this.passWord
+					userName: this.userName,
+					passWord: this.passWord
 				}
-				this.$api.register(req).then(res=>{
-					console.log(res)
-				})
+				const res = await this.$api.register(req)
+				if (res) {
+					uni.showToast({
+						icon: 'none',
+						title: '注册成功'
+					})
+					this.login(res) //存入store中
+					uni.navigateBack({ //跳转回我的
+						delta: 2
+					})
+				}
+				_this.isRotate = false
 			}
 		}
 	}

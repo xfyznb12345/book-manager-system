@@ -1,11 +1,10 @@
-//get请求封装
-const headers = {
-	'content-type': 'application/json'
-}
+import uView from "uview-ui";
+
+const headers = {}
 export function globalRequest(url, data, method) {
-	// switch(method){
-	// 	case 1:
-	// }
+	//拦截POST请求
+	if (method === 'POST') headers['content-Type'] = 'application/json;charset=UTF-8'
+	else headers['content-Type'] = 'application/json'
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: url,
@@ -14,21 +13,21 @@ export function globalRequest(url, data, method) {
 			dataType: 'json',
 			header: headers,
 			success(res) {
-				if (res.statusCode === 200) {
-					if(res.data.code !== 200){
-						uni.showTost({
+				if (res.statusCode && res.statusCode !== 200) {
+					reject(res)
+				} else {
+					if (res.data.code !== 200) {
+						uni.showToast({
 							title:res.data.msg,
-							icon:'error',
-							duration:2000,
-							mask:false
+							icon:'none',
+							mask:true
 						})
-					}else{
-						resolve(res.data)
+						resolve()
 					}
+					resolve(res.data.data)
 				}
-				else reject(res.data)
 			},
-			error(e) {
+			fail(err) {
 				reject('网络出错');
 			}
 		})

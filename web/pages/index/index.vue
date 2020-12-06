@@ -46,7 +46,6 @@
 			}
 		},
 		onLoad() {
-
 		},
 		methods: {
 			toIndex(index) {
@@ -68,8 +67,10 @@
 </script>
 
 <style scoped lang="scss">
+	page{
+		height: 100%;
+	}
 	/*苹果x适配 H5APP*/
-
 	.index-body {
 		position: fixed;
 		top: 0;

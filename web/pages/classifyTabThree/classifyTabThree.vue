@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<classifylist :bookData="bookData" @listTabBtn="TabBtn" @labelSortBtn="SortBtn" @classLabelBtn="classBtn" @booksDataBtn="booksBtn"/>
+		<classifylist :bookData="bookData" update @listTabBtn="TabBtn" @labelSortBtn="SortBtn" @classLabelBtn="classBtn" @booksDataBtn="booksBtn"/>
 	</view>
 </template>
 

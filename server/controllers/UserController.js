@@ -7,17 +7,16 @@ module.exports = {
   /**
    * 管理员账户登录
    */
-  'POST /api/admin/login':async(ctx,next)=>{
+  'POST /api/admin/login': async (ctx, next) => {
     const { userName, passWord } = ctx.request.body
     if (!userName || !passWord) {
       throw new InvalidQueryError()
     }
     const user = await UserService.findUser({ userName })
-    if (!user || user.status) {
-      console.log('===');
+    if (!user || user.status !== 0) {
       ctx.error = '用户不存在'
       ctx.code = 0
-    }else{
+    } else {
       const isValid = require('bcrypt').compareSync(passWord, user.passWord)
       if (!isValid) {
         ctx.error = '密码错误'
@@ -46,20 +45,16 @@ module.exports = {
       throw new InvalidQueryError()
     }
     const user = await UserService.findUser({ userName })
-    if (!user) {
+    if (!user || user.status !== 1) {
       ctx.error = '用户不存在'
       ctx.code = 0
-    } 
+    }
     const isValid = require('bcrypt').compareSync(passWord, user.passWord)
     if (!isValid) {
       ctx.error = '密码错误'
     } else {
       ctx.result = {
-        userInfo: {
-          id: user._id,
-          userName: user.userName,
-          nickName: user.nickName,
-        },
+        userInfo: user,
         token: jwt.sign({
           data: user._id,
           exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3), //设置 token 过期时间: 3d
@@ -82,14 +77,12 @@ module.exports = {
       const user = await UserService.save({ userName, passWord })
       ctx.result = {
         userInfo: {
-          id: user._id,
-          userName: user.userName,
-          nickname: user.nickName,
+          id: user
         },
-        // token: jwt.sign({
-        //   data: user._id,
-        //   exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3), //设置 token 过期时间: 3d
-        // }, tokenConfig.secret)
+        token: jwt.sign({
+          data: user._id,
+          exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3), //设置 token 过期时间: 3d
+        }, tokenConfig.secret)
       }
     }
     return next()

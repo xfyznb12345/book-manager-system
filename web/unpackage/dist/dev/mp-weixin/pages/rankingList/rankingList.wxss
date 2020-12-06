@@ -1,0 +1,297 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* uni.scss */
+/* 颜色变量 */
+/* 主要颜色 */
+/* 文本颜色 */
+/* 其它颜色 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/* 页面左右间距 */
+/* 文字尺寸 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+.books-body.data-v-456bbf70 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.books-left.data-v-456bbf70 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 160rpx;
+  max-width: 160rpx;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+}
+.books-right.data-v-456bbf70 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  overflow-y: auto;
+  min-width: calc(100% - 160rpx);
+  max-width: calc(100% - 160rpx);
+}
+.books-right .books-screen.data-v-456bbf70 {
+  height: 80rpx;
+  width: 100%;
+  background-color: #fff;
+  padding: 0 30rpx;
+}
+.books-right .books-screen .books-label.data-v-456bbf70 {
+  display: inline-table;
+  margin-right: 20rpx;
+  margin-top: 16rpx;
+  height: 48rpx;
+  font-size: 24rpx;
+  padding: 0 26rpx;
+  line-height: 48rpx;
+  -webkit-border-radius: 48rpx;
+          border-radius: 48rpx;
+  background-color: #f7f7f7;
+  color: #666777;
+}
+.books-right .books-screen .books-active.data-v-456bbf70 {
+  background-color: #ECF3FD;
+  color: #0086E7;
+}
+.books-right .bookrack-body.data-v-456bbf70 {
+  height: calc(100% - 80rpx);
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 40rpx;
+}
+.books-right .books-box.data-v-456bbf70 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  height: 168rpx;
+  padding: 20rpx 30rpx 20rpx 30rpx;
+}
+.books-right .books-image.data-v-456bbf70 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 116rpx;
+  max-width: 116rpx;
+  height: 128rpx;
+  position: relative;
+  z-index: 10;
+}
+.books-right .books-image .book-img.data-v-456bbf70 {
+  width: 96rpx;
+  height: 128rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  overflow: auto;
+  background-color: #eaeaea;
+}
+.books-right .ripple.data-v-456bbf70 {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  z-index: -5;
+  background-color: #EEEEEE;
+  -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+          box-shadow: 0 0 0px 500px #EEEEEE;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  -webkit-animation: myfirst-data-v-456bbf70 0.6s;
+          animation: myfirst-data-v-456bbf70 0.6s;
+  opacity: 0.6;
+}
+.books-right .books-text.data-v-456bbf70 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  padding: 8rpx 0;
+  position: relative;
+  z-index: 10 !important;
+  height: 128rpx;
+}
+.books-right .books-text .books-head.data-v-456bbf70 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.books-right .books-text .books-head .head-left.data-v-456bbf70 {
+  font-size: 28rpx;
+  line-height: 38rpx;
+  font-weight: 400;
+  height: 76rpx;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.books-right .books-text .books-head .head-right.data-v-456bbf70 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 38rpx;
+  max-width: 38rpx;
+}
+.books-right .books-text .books-head .head-right .ranking-img.data-v-456bbf70 {
+  width: 38rpx;
+  height: 45rpx;
+}
+.books-right .books-text .books-describe.data-v-456bbf70 {
+  height: 36rpx;
+  color: #666777;
+  font-size: 26rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.books-right .books-text .books-describe .popularity.data-v-456bbf70 {
+  float: right;
+  font-size: 24rpx;
+  font-size: 24rpx;
+}
+.left-list.data-v-456bbf70 {
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666777;
+}
+.left-list .vertical-bar.data-v-456bbf70 {
+  display: none;
+  height: 60rpx;
+  width: 8rpx;
+  background-color: #0086E7;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  float: left;
+  margin-top: 30rpx;
+}
+.books-left-active.data-v-456bbf70 {
+  color: #0086E7;
+  background-color: #fff;
+  padding-right: 8rpx;
+}
+.books-left-active .vertical-bar.data-v-456bbf70 {
+  display: block;
+}
+.bookrack-body.data-v-456bbf70::-webkit-scrollbar {
+  display: none !important;
+}
+@-webkit-keyframes myfirst-data-v-456bbf70 {
+from {
+    -webkit-box-shadow: 0 0 0px 30px #EEEEEE;
+            box-shadow: 0 0 0px 30px #EEEEEE;
+    opacity: 1;
+}
+to {
+    -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+            box-shadow: 0 0 0px 500px #EEEEEE;
+    opacity: 0.5;
+}
+}
+@keyframes myfirst-data-v-456bbf70 {
+from {
+    -webkit-box-shadow: 0 0 0px 30px #EEEEEE;
+            box-shadow: 0 0 0px 30px #EEEEEE;
+    opacity: 1;
+}
+to {
+    -webkit-box-shadow: 0 0 0px 500px #EEEEEE;
+            box-shadow: 0 0 0px 500px #EEEEEE;
+    opacity: 0.5;
+}
+}
+.filtrate.data-v-456bbf70 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.filtrate .shade.data-v-456bbf70 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.filtrate .label.data-v-456bbf70 {
+  width: 100%;
+  padding: 20rpx 30rpx 40rpx 30rpx;
+  background-color: #fff;
+  position: absolute;
+  z-index: 200;
+}
+.filtrate .label .label-list.data-v-456bbf70 {
+  padding: 30rpx 0 10rpx 0;
+  color: #666777;
+  font-size: 24rpx;
+}
+.filtrate .label .label-list .pack.data-v-456bbf70 {
+  color: #0086E7;
+  float: right;
+}
+.filtrate .label .label-list .pack .pack-up.data-v-456bbf70 {
+  font-size: 24rpx;
+  margin-left: 4rpx;
+  display: inline-table;
+}
+.filtrate .label .label-list .label-boxs.data-v-456bbf70 {
+  padding: 0 10rpx;
+}
+.filtrate .label .label-list .label-boxs .label-span.data-v-456bbf70 {
+  font-size: 26rpx;
+  color: #666777;
+  display: inline-block;
+  height: 56rpx;
+  line-height: 56rpx;
+  padding: 0 40rpx;
+  margin: 30rpx 30rpx 0 0;
+  background-color: #f7f7f7;
+  -webkit-border-radius: 56rpx;
+          border-radius: 56rpx;
+}
+.filtrate .label .label-list .label-boxs .label-active.data-v-456bbf70 {
+  color: #0086E7;
+  background-color: #ECF3FD;
+}
+

@@ -3,47 +3,45 @@
 		<view class="wrap">
 			<u-swiper class="banner-bg" :duration="1000" :height="300" :interval="4000" :list="banner"></u-swiper>
 		</view>
-
 	</view>
-
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
-				banner: [{
-						image: 'https://s1.ax1x.com/2020/04/24/JD9GJH.jpg'
-					},
-					{
-						image: 'https://s1.ax1x.com/2020/05/28/tZmqmt.jpg'
-					},
-					{
-						image: 'https://s1.ax1x.com/2020/05/28/tZMsN6.jpg'
-					},
-				]
+				banner: []
 			}
 		},
 		methods: {
-
+			async getAdList() {
+				const res = await this.$api.adList()
+				if (res) {
+					res.forEach(val => {
+						val.image = this.$api.imgUrl + val.image
+					})
+					this.banner = res
+				}
+			}
 		},
-		onLoad() {
-		
+		created() {
+			this.getAdList()
 		}
 	}
 </script>
 
 <style scoped lang="scss">
 	$bannerH: 300rpx;
-	.banner-box{
+
+	.banner-box {
 		padding: 40upx $bleed 0 $bleed;
 	}
+
 	.wrap {
 		height: $bannerH;
 		background-color: $skeletonColor;
 	}
-	.banner-bg{
+
+	.banner-bg {
 		background-color: $skeletonColor;
 	}
-
 </style>

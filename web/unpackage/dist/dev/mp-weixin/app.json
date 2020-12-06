@@ -1,6 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/rankingList/rankingList",
+    "pages/booksDetails/booksDetails",
+    "pages/booksInfo/booksInfo",
+    "pages/searchList/searchList",
+    "pages/search/search",
+    "pages/details/details",
     "pages/login/login",
     "pages/login/register"
   ],
@@ -11,6 +17,5 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap24.json"
+  "usingComponents": {}
 }

@@ -10477,18 +10477,19 @@ var _request = __webpack_require__(/*! ./request.js */ 41);var apiUrl = "";if (t
   apiUrl = 'http://localhost:3000/api';} else {}
 
 var api = {};
-
+api.imgUrl = 'http://localhost:3000';
 //注册接口
 api.register = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/register"), params, 'POST');};
-
-
-
-
-
-
-
-api.cate = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/category/list"), params, 'GET');};var _default =
-
+//登录接口
+api.login = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/login"), params, 'POST');};
+//首页轮播图
+api.adList = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/adList"), params, 'GET');};
+//分类列表
+api.category = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/category"), params, 'GET');};
+//分类图书列表
+api.bookList = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/bookList"), params, 'GET');};
+//获取图书详情
+api.bookInfo = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/bookInfo/").concat(params), 'GET');};var _default =
 api;exports.default = _default;
 
 /***/ }),
@@ -10500,14 +10501,13 @@ api;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.globalRequest = globalRequest; //get请求封装
-var headers = {
-  'content-type': 'application/json' };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.globalRequest = globalRequest;var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
+var headers = {};
 function globalRequest(url, data, method) {
-  // switch(method){
-  // 	case 1:
-  // }
+  //拦截POST请求
+  if (method === 'POST') headers['content-Type'] = 'application/json;charset=UTF-8';else
+  headers['content-Type'] = 'application/json';
   return new Promise(function (resolve, reject) {
     uni.request({
       url: url,
@@ -10516,21 +10516,21 @@ function globalRequest(url, data, method) {
       dataType: 'json',
       header: headers,
       success: function success(res) {
-        if (res.statusCode === 200) {
+        if (res.statusCode && res.statusCode !== 200) {
+          reject(res);
+        } else {
           if (res.data.code !== 200) {
-            uni.showTost({
+            uni.showToast({
               title: res.data.msg,
-              icon: 'error',
-              duration: 2000,
-              mask: false });
+              icon: 'none',
+              mask: true });
 
-          } else {
-            resolve(res.data);
+            resolve();
           }
-        } else
-        reject(res.data);
+          resolve(res.data.data);
+        }
       },
-      error: function error(e) {
+      fail: function fail(err) {
         reject('网络出错');
       } });
 
@@ -10547,15 +10547,32 @@ function globalRequest(url, data, method) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 _vue.default.use(_vuex.default);
 var store = new _vuex.default.Store({
-  state: {},
-  mutations: {},
+  state: {
+    isLogin: false,
+    userInfo: {} },
+
+  mutations: {
+    login: function login(state, res) {
+      state.isLogin = true;
+      state.userInfo = res.userInfo;
+      uni.setStorageSync('user_token', res.token); //存入缓存
+    },
+    logout: function logout(state) {
+      state.isLogin = false;
+      state.userInfo = {};
+      uni.removeStorage({
+        key: 'user_token' });
+
+    } },
+
   actions: {} });var _default =
 
 store;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 43 */

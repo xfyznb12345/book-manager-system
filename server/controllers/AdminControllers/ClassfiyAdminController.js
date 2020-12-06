@@ -17,7 +17,6 @@ module.exports = {
     if(category){
       classfiy = {category:category}
     }
-    console.log();
     const filter = {
       $and: [
         classfiy,

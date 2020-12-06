@@ -3,11 +3,11 @@
 		<view class="user-section">
 			<image class="bg" src="/static/user-bg.jpg"></image>
 			<view class="user-info-box">
-				<view class="portrait-box">
+				<view class="portrait-box" @tap="chooseAvatar">
 					<image class="portrait" :src="userInfo.portrait || '/static/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username">{{userInfo.nickname || '游客'}}</text>
+					<text class="username">{{ isLogin ? userInfo.userName : '游客'}}</text>
 				</view>
 			</view>
 		</view>
@@ -20,7 +20,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="user-box paddingInfo">
 			<view class="cu-list menu shadow">
 				<!-- 收藏 -->
@@ -47,7 +47,7 @@
 				</view>
 				<!-- 退出 -->
 				<view class="cu-item ">
-					<button class="cu-btn content" open-type="contact">
+					<button class="cu-btn content" @click="loginOut">
 						<text class="cuIcon-settings text-olive"></text>
 						<text class="text-grey">退出登录</text>
 					</button>
@@ -57,10 +57,16 @@
 	</view>
 </template>
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex'
 	export default {
+		computed: {
+			...mapState(['isLogin', 'userInfo'])
+		},
 		data() {
 			return {
-				userInfo:'',
 				cuIconList: [{
 					cuIcon: 'cardboardfill',
 					color: 'red',
@@ -84,20 +90,43 @@
 				}],
 			}
 		},
-		methods:{
-			checkLogin(){
+		methods: {
+			chooseAvatar() {
+				this.$u.route({
+					url: './u-avatar-cropper',
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 200,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					}
+				})
+			},
+			...mapMutations(['logout']),
+			//检查login
+			checkLogin() {
 				uni.getStorage({
-					key:'user_token',
-					success(res){
-						console.log(res)
-					},
-					fail(err){
+					key: 'user_token',
+					fail(err) {
 						uni.navigateTo({
-							url:'../login/login'
+							url: '../login/login'
 						})
 					}
 				})
-			}
+			},
+			//退出登录
+			loginOut() {
+				uni.showModal({
+					content: '确定要退出登录么',
+					success: (e) => {
+						if (e.confirm) {
+							this.logout();
+						}
+					}
+				});
+			},
 		},
 		created() {
 			const loginRes = this.checkLogin();
@@ -143,9 +172,10 @@
 			color: $font-color-dark;
 			margin-left: 20upx;
 		}
-		
+
 	}
-	.paddingInfo{
-		padding:20rpx 20rpx 0 20rpx;
+
+	.paddingInfo {
+		padding: 20rpx 20rpx 0 20rpx;
 	}
 </style>

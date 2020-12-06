@@ -30,9 +30,9 @@
 import { VueCropper } from 'vue-cropper'
 export default {
   components: {
-    VueCropper,
+    VueCropper
   },
-  data() {
+  data () {
     return {
       imageUrl: '',
       dialogVisible: false,
@@ -54,12 +54,12 @@ export default {
         original: false, // 上传图片按照原始比例渲染
         centerBox: false, // 截图框是否被限制在图片里面
         infoTrue: true, // true 为展示真实输出图片宽高 false 展示看到的截图框宽高
-        canMove: true,
+        canMove: true
       },
-      picsList: [], //页面显示的数组
+      picsList: [], // 页面显示的数组
       // 防止重复提交
       loading: false,
-      fileinfo: {},
+      fileinfo: {}
     }
   },
   methods: {
@@ -91,7 +91,7 @@ export default {
     //     //请求
     //   })
     // },
-  },
+  }
 }
 </script>
 <style scoped>

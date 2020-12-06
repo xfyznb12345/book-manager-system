@@ -1,0 +1,281 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* uni.scss */
+/* 颜色变量 */
+/* 主要颜色 */
+/* 文本颜色 */
+/* 其它颜色 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/* 页面左右间距 */
+/* 文字尺寸 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+.books-details.data-v-0e26d790 {
+  padding: 0 30rpx 34px 30rpx;
+}
+.book-detail.data-v-0e26d790 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding-top: 40rpx;
+}
+.book-detail .detail-left.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  min-width: 270rpx;
+  max-width: 270rpx;
+  height: 360rpx;
+}
+.book-detail .detail-left .book-img.data-v-0e26d790 {
+  width: 240rpx;
+  height: 360rpx;
+  -webkit-border-radius: 12rpx;
+          border-radius: 12rpx;
+  background-color: #eaeaea;
+}
+.book-detail .detail-right.data-v-0e26d790 {
+  height: 360rpx;
+  padding: 4rpx 0;
+}
+.book-detail .detail-right .detail-right-box.data-v-0e26d790 {
+  height: calc(100% - 64rpx);
+}
+.book-detail .detail-right .title.data-v-0e26d790 {
+  font-size: 36rpx;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10rpx;
+}
+.book-detail .detail-right .author.data-v-0e26d790 {
+  font-size: 26rpx;
+  color: #666777;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  padding-bottom: 20rpx;
+}
+.book-detail .detail-right .tag.data-v-0e26d790 {
+  padding-bottom: 5rpx;
+}
+.book-detail .detail-right .tag .tag-title.data-v-0e26d790 {
+  background-color: #EFF5FD;
+  height: 48rpx;
+  line-height: 48rpx;
+  color: #666777;
+  padding: 0 20rpx;
+  margin-right: 20rpx;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+  display: inline-block;
+  font-size: 24rpx;
+}
+.book-detail .detail-right .grade.data-v-0e26d790 {
+  padding-top: 4rpx;
+}
+.book-detail .detail-right .btn-box .readBtn.data-v-0e26d790 {
+  background-color: #0086E7;
+  border: 1px solid #0086E7;
+  padding: 0 30rpx;
+  display: inline-block;
+  height: 64rpx;
+  line-height: 64rpx;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+  color: #fff;
+  cursor: pointer;
+  font-size: 28rpx;
+  margin-right: 26rpx;
+}
+.book-detail .detail-right .btn-box .joinBtn.data-v-0e26d790 {
+  border: 1px solid #0086E7;
+  color: #0086E7;
+  padding: 0 29rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  display: inline-block;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+  cursor: pointer;
+  font-size: 28rpx;
+}
+.book-jieshao.data-v-0e26d790 {
+  padding: 40rpx 0 30rpx 0;
+  overflow: hidden;
+}
+.book-jieshao .jiesha.data-v-0e26d790 {
+  width: 100%;
+  word-wrap: break-word;
+  color: #666777;
+  line-height: 48rpx;
+  font-size: 26rpx;
+}
+.catalogue-box.data-v-0e26d790 {
+  height: 96rpx;
+  line-height: 96rpx;
+  padding: 0 20rpx;
+  background-color: #ECF3FD;
+  -webkit-border-radius: 4rpx;
+          border-radius: 4rpx;
+  font-size: 28rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  margin-bottom: 60rpx;
+}
+.catalogue-box .catalogue-left.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  max-width: 120rpx;
+}
+.catalogue-box .catalogue-centre.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  color: #666777;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.catalogue-box .catalogue-right.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  max-width: 80rpx;
+  text-align: right;
+}
+.review .review-head.data-v-0e26d790 {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-bottom: 30rpx;
+}
+.review .review-input.data-v-0e26d790 {
+  height: 84rpx;
+  -webkit-border-radius: 8rpx;
+          border-radius: 8rpx;
+  border: 1px solid #0086E7;
+  margin-bottom: 60rpx;
+}
+.review .review-input input.data-v-0e26d790 {
+  height: 82rpx;
+  line-height: 82rpx;
+  padding: 0 20rpx;
+  float: left;
+  width: calc(100% - 112rpx);
+  font-size: 28rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.review .review-input .review-btn.data-v-0e26d790 {
+  float: right;
+  height: 82rpx;
+  line-height: 82rpx;
+  width: 112rpx;
+  background-color: #0086E7;
+  text-align: center;
+}
+.review .review-input .review-btn .send.data-v-0e26d790 {
+  color: #fff;
+  font-size: 48rpx;
+}
+.review-list .review-box.data-v-0e26d790 {
+  padding-bottom: 40rpx;
+}
+.review-list .review-box .user-message.data-v-0e26d790 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 76rpx;
+}
+.review-list .review-box .user-message .message-img.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  height: 76rpx;
+  min-width: 96rpx;
+  max-width: 96rpx;
+}
+.review-list .review-box .user-message .message-img .user-img.data-v-0e26d790 {
+  width: 76rpx;
+  height: 76rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background-color: #eaeaea;
+}
+.review-list .review-box .user-message .message-name.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.review-list .review-box .user-message .message-name .head.data-v-0e26d790 {
+  font-size: 28rpx;
+  height: 44rpx;
+}
+.review-list .review-box .user-message .message-name .star.data-v-0e26d790 {
+  height: 38rpx;
+  padding-top: 2rpx;
+}
+.review-list .review-box .user-message .message-praise.data-v-0e26d790 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  line-height: 56rpx;
+  min-width: 40rpx;
+  max-width: 40rpx;
+  text-align: right;
+  padding: 10rpx 0;
+}
+.review-list .review-box .user-message .message-praise .icon-active .love.data-v-0e26d790 {
+  color: #FF5050;
+}
+.review-list .review-box .user-message .message-praise .love.data-v-0e26d790 {
+  font-size: 34rpx;
+  color: #A3B0C0;
+}
+.review-list .review-box .con-tent.data-v-0e26d790 {
+  padding: 14rpx 0 0 96rpx;
+}
+.review-list .review-box .con-tent .text.data-v-0e26d790 {
+  word-wrap: break-word;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  color: #666777;
+}
+.review-list .review-box .con-tent .time.data-v-0e26d790 {
+  padding: 10rpx 0 0 0;
+  color: #a4a6bf;
+  font-size: 24rpx;
+}
+

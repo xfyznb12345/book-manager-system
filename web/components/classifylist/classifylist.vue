@@ -3,13 +3,13 @@
 		<!-- 左边切换 -->
 		<view class="books-left">
 			<view class="left-list" :class="{'books-left-active': listActive == bookDataKey}" v-for="(bookDataList,bookDataKey) in bookData"
-			 @click="listBtnOne(bookDataKey,bookDataList.list)" :key="bookDataKey">
+			 @click="listBtnOne(bookDataKey,bookDataList.code)" :key="bookDataKey">
 				<view class="vertical-bar"></view>
 				{{bookDataList.list}}
 			</view>
 		</view>
 		<!-- 筛选弹出层 -->
-		<view class="books-right" v-for="(bookDataList,bookDataKey) in bookData" :key="bookDataKey" v-if="listActive == bookDataKey">
+		<view class="books-right" v-for="(bookDataList,bookDataKey) in bookData" :key="bookDataKey" v-if="listActive == bookDataKey && update">
 			<view class="books-screen">
 				<p class="amount">{{bookDataList.amount}}本图书<span class="screen-span" @click="classifyBtn">最热·全部</span></p>
 				<view class="filtrate" v-if="filtrateOff">
@@ -22,8 +22,8 @@
 								</span>
 							</p>
 							<view class="label-boxs">
-								<view v-for="(classList,classKey) in bookDataList.sortList" :key="classKey" class="label-span" :class="{'label-active':labelActive == classKey}"
-								 @click="labelBtn(classKey,classList)">{{classList}}
+								<view v-for="(classList,classKey) in bookDataList.sortList || sortList" :key="classKey" class="label-span"
+								 :class="{'label-active':labelActive == classKey}" @click="labelBtn(classKey,classList)">{{classList}}
 								</view>
 							</view>
 						</view>
@@ -39,36 +39,40 @@
 							</view>
 						</view>
 					</view>
-					<!-- 遮罩层 -->
 					<view class="shade" @click="packUpBtn"></view>
 				</view>
 			</view>
 			<!-- 图书列表 -->
-			<view class="bookrack-body">
+			<scroll-view class="bookrack-body" scroll-y="true" lower-threshold="50" @scrolltolower="scrollToLower">
 				<view class="books-box" v-for="(booksList,booksKey) in bookDataList.books" :key="booksKey" @click="booksBtn($event,booksKey,'bookHeight' + booksKey,booksList,booksList)"
 				 :id="'bookHeight' + booksKey">
 					<view class="books-image">
-						<image class="book-img" :src="booksList.url"></image>
+						<image class="book-img" :src="booksList.url || url[booksKey%10]"></image>
 					</view>
 					<view class="books-text">
 						<view class="text-box">
-							<view class="books-head">{{booksList.head}}</view>
-							<view class="books-describe">{{booksList.text}}</view>
+							<view class="books-head">{{booksList.title || booksList.head}}</view>
+							<view class="books-describe">{{booksList.abstract || booksList.text}}</view>
 						</view>
 						<view class="books-author">{{booksList.author}} 著</view>
 					</view>
 					<view class="ripple" v-if="booksKey == bookNum" :style="{ top: leftY + 'px', left: topX + 'px' , }"></view>
 				</view>
-			</view>
+				<u-loadmore :status="status"/>
+			</scroll-view>
 		</view>
 	</view>
 </template>
 <script>
+	import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue"
 	export default {
-		components: {},
-		props: ['bookData'],
+		components: {
+			uniLoadMore
+		},
+		props: ['bookData', 'update','loadMore'],
 		data() {
 			return {
+				status: 'loadmore',
 				bookNum: null, //
 				topX: '', //x轴
 				leftY: '', //y轴
@@ -76,13 +80,36 @@
 				lcalssActive: 0, //分类标签
 				labelActive: 0, //排序标签 0最热 1最新 2完结
 				listActive: 0, //左边tab
+				url: [
+					"https://s1.ax1x.com/2020/08/12/ajXteS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajjfHS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjHcq.png",
+					"https://s1.ax1x.com/2020/05/25/tpsFDH.png",
+					"https://s1.ax1x.com/2020/08/12/ajvsVU.png",
+					"https://s1.ax1x.com/2020/08/12/ajvTaD.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajzdBV.png",
+					"https://s1.ax1x.com/2020/08/12/avSLRJ.png",
+					"https://s1.ax1x.com/2020/08/12/avpDSJ.png"
+				],
+				sortList: ['最热', '最新', '最火'],
 			}
 		},
-		onLoad() {
-
+		watch:{
+			//监听loadMore变化
+			loadMore(){
+				this.status = 'loadmore'
+			}
 		},
 		methods: {
-			booksBtn(e,value,topH,booksdata) {
+			scrollToLower(){
+				if(this.status==='loadmore'){
+					this.status = 'loading'
+					this.$emit('getMore')
+				}
+			},
+			booksBtn(e, value, topH, booksdata) {
 				//清空遗留数据
 				this.bookNum = null
 				this.topX = null
@@ -129,7 +156,6 @@
 			packUpBtn() { //收起筛选
 				this.filtrateOff = false
 			}
-
 		}
 	}
 </script>

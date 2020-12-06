@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-			<!-- banner -->
+			<!-- 轮播图 -->
 			<banner />
 	
 			<!-- 金刚区 -->
@@ -42,24 +42,20 @@
 		data() {
 			return {
 				selectData: [{
-						url: "https://s2.ax1x.com/2020/02/23/3lVgTP.png",
-						text: "榜单"
+						url: "../../static/p1.png",
+						text: "热门书榜"
 					},
 					{
-						url: "https://s2.ax1x.com/2020/02/23/3lVRFf.png",
-						text: "小说"
+						url: "../../static/p2.png",
+						text: "新书上架"
 					},
 					{
-						url: "https://s1.ax1x.com/2020/05/21/YHog4f.png",
-						text: "听书"
+						url: "../../static/p3.png",
+						text: "精选书籍"
 					},
 					{
-						url: "https://s2.ax1x.com/2020/02/23/3lV6eI.png",
-						text: "精选"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/02/23/3lVsOA.png",
-						text: "免费"
+						url: "../../static/p4.png",
+						text: "最多收藏"
 					},
 				],
 				imageLists: [{
@@ -135,10 +131,14 @@
 		methods: {
 			selectBtn(selectKey) {
 				// 金刚区按钮 
-				console.log('你点了第' + selectKey + '个选项')
-				uni.navigateTo({
-					url: '../../pages/rankingList/rankingList'
+				uni.showToast({
+					icon:'none',
+					title:'功能未开发，请先充值'
 				})
+				// console.log('你点了第' + selectKey + '个选项')
+				// uni.navigateTo({
+				// 	url: '../../pages/rankingList/rankingList'
+				// })
 			},
 		}
 	}

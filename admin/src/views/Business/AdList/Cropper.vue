@@ -36,13 +36,13 @@
 import { VueCropper } from 'vue-cropper'
 export default {
   components: {
-    VueCropper,
+    VueCropper
   },
   props: {
     showDialog: Boolean,
-    imgUrl: String,
+    imgUrl: String
   },
-  data() {
+  data () {
     return {
       // 裁剪组件的基础配置option
       option: {
@@ -56,36 +56,36 @@ export default {
         autoCropHeight: 270, // 默认生成截图框高度
         fixedBox: false, // 固定截图框大小 不允许改变
         fixed: true, // 是否开启截图框宽高固定比例
-        fixedNumber: [16, 9], // 截图框的宽高比例
+        fixedNumber: [23, 10], // 截图框的宽高比例
         full: false, // 是否输出原图比例的截图
         canMoveBox: false, // 截图框能否拖动
         original: false, // 上传图片按照原始比例渲染
         centerBox: false, // 截图框是否被限制在图片里面
         infoTrue: true, // true 为展示真实输出图片宽高 false 展示看到的截图框宽高
-        canMove: true,
+        canMove: true
       },
       // 防止重复提交
-      loading: false,
+      loading: false
     }
   },
   methods: {
-    //初始化
-    openDialog() {
+    // 初始化
+    openDialog () {
       this.option.img = this.imgUrl
     },
-    finish() {
+    finish () {
       this.$refs.cropper.getCropBlob((data) => {
         // 获取截图的blob数据
         const aTime = new Date().getTime() // 取时间戳，给文件命名
         const fileName = aTime + '.' + data.type.substr(6) // 给文件名加后缀
         const file = new window.File([data], fileName, { type: data.type }) // blob转file
-        this.$emit('close',file)
+        this.$emit('close', file)
       })
     },
-    handleCancel(){
+    handleCancel () {
       this.$emit('close')
     }
-  },
+  }
 }
 </script>
 
