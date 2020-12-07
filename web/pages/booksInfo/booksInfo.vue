@@ -2,13 +2,13 @@
 	<view class="books-details">
 		<view class="book-detail">
 			<view class="detail-left">
-				<image class="book-img" :src="url[Math.floor((Math.random()*url.length))]" />
+				<image class="book-img" :src="bookInfo.image" />
 			</view>
 			<view class="detail-right">
 				<view class="detail-right-box">
 					<view class="title">{{bookInfo.title || '不明'}}</view>
 					<view class="author">{{(bookInfo.author + ' 著')|| '不明'}}</view>
-					<view class="tag" >
+					<view class="tag">
 						<view class="tag-title" v-for="item in bookInfo.tagList">{{item}}</view>
 					</view>
 					<view class="grade">
@@ -17,7 +17,7 @@
 				</view>
 				<view class="btn-box">
 					<view class="readBtn">借阅</view>
-					<view class="joinBtn">加入收藏</view>
+					<view class="joinBtn" @click="collectBook">{{state ? '已收藏' : '加入收藏'}}</view>
 				</view>
 			</view>
 		</view>
@@ -71,6 +71,7 @@
 				</view>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -89,15 +90,24 @@
 					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
 					"https://s1.ax1x.com/2020/08/12/ajzdBV.png",
 					"https://s1.ax1x.com/2020/08/12/avSLRJ.png",
+					'https://s2.ax1x.com/2020/03/05/3THGsU.png',
+					'https://s2.ax1x.com/2020/03/04/35f6C4.png',
+					'https://s2.ax1x.com/2020/03/04/35fs5F.png',
+					'https://s2.ax1x.com/2020/03/04/35fhb6.png',
+					'https://s2.ax1x.com/2020/03/05/3T5pLj.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Ces.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Pwn.png',
+					'https://s2.ax1x.com/2020/03/05/3TH8MT.png'
 				],
-				bookInfo:{},
+				bookInfo: {},
+				state:false ,//收藏状态
 				jiesha: `《人性的弱点》自出版以来，已被译成 58 种文字畅销于世界各地，
 				全球总销量达 9000 余万册，拥有 4 亿多读者，稳居成功励志类图书榜首，
 				是人类出版史上继《圣经》之后的第二大畅销书。
 				该书汇集了卡耐基的思想精华和激动人心的内容，是作者功的励志经典，
 				出版后立即获得了广大读者的欢迎，成为西方世界的人文书。无数读者通过阅读和实践书中介绍的各种方法，
 				不仅走出困境，有的还成为人仰慕的杰出人士。只要不断研读本书，相信你也可以发掘自己的无穷潜力，创造辉煌的人生。`,
-				iconOFF:false, //爱心激活开关
+				iconOFF: false, //爱心激活开关
 				jieshaStyle: {
 					backgroundImage: "linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, #fff 80%)",
 					paddingTop: "80rpx",
@@ -105,22 +115,62 @@
 				},
 			};
 		},
-		onLoad(options){
+		onLoad(options) {
 			this.getBookInfo(options.id)
 		},
 		methods: {
-			async getBookInfo(id){
+			async getBookInfo(id) {
 				const res = await this.$api.bookInfo(id)
-				if(res){
+				if (res) {
 					this.bookInfo = res
+					this.bookInfo.image = this.url[Math.floor((Math.random()*this.url.length))]
+					this.bookInfo.collect && (this.state = true)
 					res.abstract && (this.jiesha = res.abstract)
+				}
+			},
+			//收藏图书
+			async collectBook() {
+				if(this.state){
+					const res = await this.$api.collectBookDel({
+						bookId: this.bookInfo._id
+					}).catch(err => {
+						this.$refs.uToast.show({
+							title: '请先登录',
+							type: 'warning'
+						})
+					
+					})
+					if (res) {
+						this.$refs.uToast.show({
+							title: '取消成功',
+							type: 'success'
+						})
+						this.state = false
+					}
+				}else{
+					const res = await this.$api.collectBook({
+						bookId: this.bookInfo._id
+					}).catch(err => {
+						this.$refs.uToast.show({
+							title: '请先登录',
+							type: 'warning'
+						})
+					
+					})
+					if (res) {
+						this.$refs.uToast.show({
+							title: '收藏成功',
+							type: 'success'
+						})
+						this.state = true
+					}
 				}
 			},
 			rateBtn(value) {
 				console.log(value)
 			},
-			iconActive(){
-				this.iconOFF =! this.iconOFF
+			iconActive() {
+				this.iconOFF = !this.iconOFF
 			}
 		},
 		mounted() {}
@@ -177,6 +227,7 @@
 				-webkit-line-clamp: 1;
 				-webkit-box-orient: vertical;
 				padding-bottom: 20upx;
+				overflow: hidden;
 			}
 
 			.tag {
@@ -213,9 +264,9 @@
 					font-size: 28upx;
 					margin-right: 26upx;
 				}
-				.readBtn:active{
-					
-				}
+
+				.readBtn:active {}
+
 				.joinBtn {
 					border: 1px solid $dominantHue;
 					color: $dominantHue;
@@ -290,6 +341,7 @@
 			border-radius: 8upx;
 			border: 1px solid $dominantHue;
 			margin-bottom: 60upx;
+
 			input {
 				height: $review - 2upx;
 				line-height: $review - 2upx;
@@ -297,7 +349,7 @@
 				float: left;
 				width: calc(100% - 112upx);
 				font-size: 28upx;
-				box-sizing:border-box;
+				box-sizing: border-box;
 			}
 
 			.review-btn {
@@ -315,73 +367,85 @@
 			}
 		}
 	}
-	.review-list{
-		.review-box{
-			$imgWidth:96upx;
+
+	.review-list {
+		.review-box {
+			$imgWidth: 96upx;
 			padding-bottom: 40upx;
-			.user-message{
-				$userH:76upx;
+
+			.user-message {
+				$userH: 76upx;
 				display: flex;
 				height: $userH;
-				.message-img{
+
+				.message-img {
 					flex: 1;
 					height: $userH;
 					min-width: $imgWidth;
 					max-width: $imgWidth;
-					.user-img{
+
+					.user-img {
 						width: $userH;
 						height: $userH;
 						border-radius: 50%;
 						background-color: $skeletonColor;
 					}
 				}
-				.message-name{
+
+				.message-name {
 					flex: 1;
-					.head{
+
+					.head {
 						font-size: 28upx;
 						height: 44upx;
 					}
-					.star{
+
+					.star {
 						height: 38upx;
 						padding-top: 2upx;
 					}
 				}
-				.message-praise{
+
+				.message-praise {
 					flex: 1;
 					line-height: $userH - 20upx;
 					min-width: 40upx;
 					max-width: 40upx;
 					text-align: right;
 					padding: 10upx 0;
-					.icon-active{
-						.love{
+
+					.icon-active {
+						.love {
 							color: $redAll;
 						}
 					}
-					.love{
+
+					.love {
 						font-size: 34upx;
 						color: #A3B0C0;
 					}
 				}
-				
+
 			}
-			.con-tent{
-				
-				padding:14upx 0 0 $imgWidth;
-				.text{
-					word-wrap : break-word;
+
+			.con-tent {
+
+				padding: 14upx 0 0 $imgWidth;
+
+				.text {
+					word-wrap: break-word;
 					font-size: 26upx;
 					line-height: 40upx;
 					color: $mediumGrey;
 				}
-				.time{
+
+				.time {
 					padding: 10upx 0 0 0;
 					color: $lightGray;
 					font-size: 24upx;
 				}
 			}
-	
+
 		}
 	}
-	
 </style>

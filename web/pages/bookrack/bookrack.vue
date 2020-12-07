@@ -1,60 +1,67 @@
 <template>
 	<view>
-		<!-- 弹窗 -->
-		<view class="more-shade" v-if="moreOff" @click.stop="moreOff = false">
-			<view class="more">
-				<view class="more-list more-underline" @click.stop="examine">查看详情</view>
-				<view class="more-list more-underline remove" @click.stop="shiftOut">移出</view>
-				<view class="more-list" @click.stop="moreOff =false">取消</view>
-			</view>
+		<!-- 未登录条件 -->
+		<view class="cu-bar btn-group juzhong" v-if="!isLogin">
+			<button class="cu-btn bg-black shadow-blur round lg" @click="login">请先登录</button>
 		</view>
-		<view class="bookrack-body" :class="{'bookrack-active' :checkboOff}">
-			<view class="book-top">
-				<view class="top-left">
-					<view class="top-btn" v-if="!checkboOff" @click="managementBtn">
-						<view>管理</view>
-					</view>
-					<view class="top-btn" v-if="checkboOff" @click="accomplish">
-						完成
-					</view>
-				</view>
-				<view class="top-right">
-					<view class="input-cancel" v-if="searchOff">
-						<view class="cancel-left">
-							<input class="uni-input" confirm-type="search" maxlength="50" placeholder="请输入关键词搜索" />
-
-						</view>
-						<view class="cancel-right">
-							<view class="top-btn" @click="cancelBtn">取消</view>
-						</view>
-					</view>
-					<view class="top-btn" v-if="!checkboOff && !searchOff" @click="searchBtn">
-						<!-- 搜索按钮 -->
-						<span class="iconfont search"></span>
-					</view>
+		<!-- 登录了 -->
+		<view v-else>
+			<!-- 弹窗 -->
+			<view class="more-shade" v-if="moreOff" @click.stop="moreOff = false">
+				<view class="more">
+					<view class="more-list more-underline" @click.stop="examine">查看详情</view>
+					<view class="more-list more-underline remove" @click.stop="shiftOut">移出</view>
+					<view class="more-list" @click.stop="moreOff =false">取消</view>
 				</view>
 			</view>
-			<view class="book-rack">
-				<view class="book-card" v-for="(bookList,bookKey)  in bookData" :key="bookKey" @click="bookCardBtn($event,bookKey,'bookHeight' + bookKey,bookList)"
-				 ref="bookcard">
-					<view class="book-checkbox" v-if="checkboOff">
-						<view class="checkboxcard" :class="{'checkboxactiva':bookList.checked}">
-							<view v-if="bookList.checked" class="check"></view>
+			<view class="bookrack-body" :class="{'bookrack-active' :checkboOff}">
+				<view class="book-top">
+					<view class="top-left">
+						<view class="top-btn" v-if="!checkboOff" @click="managementBtn">
+							<view>管理</view>
+						</view>
+						<view class="top-btn" v-if="checkboOff" @click="accomplish">
+							完成
 						</view>
 					</view>
-					<view class="image-text" :id="'bookHeight' + bookKey">
-						<view class="ripple" v-if="bookKey == bookNum" :style="{ top: leftY + 'px', left: topX + 'px' }"></view>
-						<view class="book-left">
-							<image class="book-img" :src="bookList.url"></image>
+					<view class="top-right">
+						<view class="input-cancel" v-if="searchOff">
+							<view class="cancel-left">
+								<input class="uni-input" confirm-type="search" maxlength="50" placeholder="请输入关键词搜索" />
+
+							</view>
+							<view class="cancel-right">
+								<view class="top-btn" @click="cancelBtn">取消</view>
+							</view>
 						</view>
-						<view class="book-right">
-							<view class="flex book-text">
-								<view class="head">{{bookList.head}}</view>
-								<view class="author">{{bookList.author}} 著</view>
-								<view class="schedule">
-									<view class="schedule-text">已读{{bookList.schedle}}%</view>
-									<view class="book-icon" v-if="!checkboOff">
-										<i class="iconfont omit" @click.stop="omitBtn(bookKey,bookList.id)"></i>
+						<view class="top-btn" v-if="!checkboOff && !searchOff" @click="searchBtn">
+							<!-- 搜索按钮 -->
+							<span class="iconfont search"></span>
+						</view>
+					</view>
+				</view>
+				<view class="book-rack">
+					<view class="book-card" v-for="(bookList,bookKey)  in bookData" :key="bookKey" @click="bookCardBtn($event,bookKey,'bookHeight' + bookKey,bookList)"
+					 ref="bookcard">
+						<view class="book-checkbox" v-if="checkboOff">
+							<view class="checkboxcard" :class="{'checkboxactiva':bookList.checked}">
+								<view v-if="bookList.checked" class="check"></view>
+							</view>
+						</view>
+						<view class="image-text" :id="'bookHeight' + bookKey">
+							<view class="ripple" v-if="bookKey == bookNum" :style="{ top: leftY + 'px', left: topX + 'px' }"></view>
+							<view class="book-left">
+								<image class="book-img" :src="bookList.url || url[bookKey%15]"></image>
+							</view>
+							<view class="book-right">
+								<view class="book-text">
+									<view class="head">{{bookList.title}}</view>
+									<view class="author">{{bookList.author}} 著</view>
+									<view class="schedule">
+										<view class="schedule-text">{{bookList.press}}</view>
+										<view class="book-icon" v-if="!checkboOff">
+											<i class="iconfont omit" @click.stop="omitBtn(bookKey,bookList._id)"></i>
+										</view>
 									</view>
 								</view>
 							</view>
@@ -62,23 +69,21 @@
 					</view>
 				</view>
 			</view>
-
-
-		</view>
-		<!-- 底下悬浮窗口 -->
-		<view class="book-bottom" v-if="checkboOff">
-			<view class="bottom-box">
-				<view class="bottom-box-left">
-					<view class="top-btn" v-if="checkboOff && !checkAllOff" @click="checkAll">
-						<view>全选</view>
+			<!-- 底下悬浮窗口 -->
+			<view class="book-bottom" v-if="checkboOff">
+				<view class="bottom-box">
+					<view class="bottom-box-left">
+						<view class="top-btn" v-if="checkboOff && !checkAllOff" @click="checkAll">
+							<view>全选</view>
+						</view>
+						<view class="top-btn" v-if="checkboOff && checkAllOff" @click="checkNooAll">
+							<view>全不选</view>
+						</view>
 					</view>
-					<view class="top-btn" v-if="checkboOff && checkAllOff" @click="checkNooAll">
-						<view>全不选</view>
-					</view>
-				</view>
-				<view class="bottom-box-right">
-					<view class="top-btn" @click="deleteBtn">
-						<view>移出书架({{selection.length}})</view>
+					<view class="bottom-box-right">
+						<view class="top-btn" @click="deleteBtn">
+							<view>移出书架({{selection.length}})</view>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -87,7 +92,24 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex'
 	export default {
+		props:{
+			reFrash:Boolean
+		},
+		computed: {
+			...mapState(['isLogin'])
+		},
+		watch: {
+			isLogin() { //当登录状态发生改变
+				this.getBookList()
+			},
+			reFrash(){ //页面返回时重新请求
+				this.getBookList()
+			}
+		},
 		components: {},
 		data() {
 			return {
@@ -100,70 +122,43 @@
 				searchOff: false, //搜索
 				moreOff: false, //更多弹窗开关
 				moreId: '', //移除书籍ID
-				bookData: [{
-						url: "https://s2.ax1x.com/2020/03/05/3THGsU.png",
-						head: "高情商沟通力",
-						author: "张超",
-						schedle: "22",
-						id: "1"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/04/35f6C4.png",
-						head: "我是个妈妈，我需要铂金包",
-						author: "温妮斯蒂·马丁",
-						schedle: "20",
-						id: "2"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/04/35fs5F.png",
-						head: "恋爱口语:我们到底要跟男人聊什么？",
-						author: "刘慈欣",
-						schedle: "35",
-						id: "3"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/04/35fhb6.png",
-						head: "迷人的材料",
-						author: "马克·米奥多尼克",
-						schedle: "32",
-						id: "4"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/05/3T5pLj.png",
-						head: "你在怕什么：与死亡有关的六幅画",
-						author: "陈诺",
-						schedle: "76",
-						id: "5"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/05/3T5Ces.png",
-						head: "切尔诺贝利的祭祷",
-						author: "S.A.阿列克谢耶维奇",
-						schedle: "55",
-						id: "6"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/05/3T5Pwn.png",
-						head: "流浪地球",
-						author: "刘慈欣",
-						schedle: "98",
-						id: "7"
-					},
-					{
-						url: "https://s2.ax1x.com/2020/03/05/3TH8MT.png",
-						head: "危险的维纳斯",
-						author: "东野圭吾",
-						schedle: "98",
-						id: "8"
-					},
-
-				]
+				bookData: [],
+				url: [
+					'https://s2.ax1x.com/2020/03/05/3THGsU.png',
+					'https://s2.ax1x.com/2020/03/04/35f6C4.png',
+					'https://s2.ax1x.com/2020/03/04/35fs5F.png',
+					'https://s2.ax1x.com/2020/03/04/35fhb6.png',
+					'https://s2.ax1x.com/2020/03/05/3T5pLj.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Ces.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Pwn.png',
+					'https://s2.ax1x.com/2020/03/05/3TH8MT.png',
+					"https://s1.ax1x.com/2020/08/12/ajXteS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajjfHS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjHcq.png",
+					"https://s1.ax1x.com/2020/05/25/tpsFDH.png",
+					"https://s1.ax1x.com/2020/08/12/ajvsVU.png",
+					"https://s1.ax1x.com/2020/08/12/ajvTaD.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajzdBV.png",
+					"https://s1.ax1x.com/2020/08/12/avSLRJ.png"
+				],
 			}
 		},
-		onLoad() {
-
-		},
 		methods: {
+			async getBookList() { //获取列表
+				const res = await this.$api.bookrack().catch(err => {
+					console.log(err)
+				})
+				if (res) {
+					this.bookData = res
+				}
+			},
+			login() { //挑战登录
+				uni.navigateTo({
+					url: '../login/login'
+				})
+			},
 			bookCardBtn(e, value, id) { //卡片点击按钮
 				//清空遗留数据
 				this.bookNum = null
@@ -184,9 +179,9 @@
 					this.bookData[value].checked = !this.bookData[value].checked
 					this.bookData.forEach(item => {
 						if (item.checked === true) {
-							this.selection.push({
-								id: item.id, //ID值，根据开发自定义 与上面checkbox的value绑定值相同
-							})
+							this.selection.push(
+								item._id, //ID值，根据开发自定义 与上面checkbox的value绑定值相同
+							)
 						}
 					})
 					if (this.selection.length == this.bookData.length) {
@@ -194,13 +189,14 @@
 					} else if (this.selection.length < this.bookData.length) {
 						this.checkAllOff = false
 					}
-
-					console.log(this.selection)
 				} else { //非多选状态下的事件
-					console.log('你点了第' + value + '个')
+				console.log(this.bookData[value])
 					// 跳转页面
+					uni.navigateTo({
+						url: `../../pages/booksInfo/booksInfo?id=${this.bookData[value]._id}`
+					})
 				}
-				//去TM的安卓APP、苹果APP、微信小程序、微信网页、H5的全兼容，具体兼容那些版本我不测了。
+				//去TM的安卓APP、苹果APP、微信小程序、微信网页、H5的全兼容。
 			},
 			managementBtn() { //管理按钮，打开多选和删除。
 				this.selection = []
@@ -218,9 +214,9 @@
 				this.bookData.forEach(item => {
 					//新增属性
 					this.$set(item, 'checked', true)
-					this.selection.push({
-						id: item.id, //ID值，根据开发自定义 与上面checkbox的value绑定值相同
-					})
+					this.selection.push(
+						item._id, //ID值，根据开发自定义 与上面checkbox的value绑定值相同
+					)
 				})
 				console.log(this.selection)
 			},
@@ -241,9 +237,20 @@
 				this.moreId = id
 				this.moreOff = true
 			},
-			deleteBtn() { //移出书架按钮
-				console.log(this.selection)
+			async deleteBtn() { //移出书架按钮
 				if (this.selection.length > 0) {
+					const res = await this.$api.rackCancel({
+						outList: this.selection
+					}).catch(err => {
+						console.log(err)
+					})
+					if (res) {
+						uni.showToast({
+							icon: 'none',
+							title: '移除成功'
+						})
+						this.getBookList()
+					}
 					//移除书架后缓存清空复位
 					this.selection = []
 					this.checkboOff = false
@@ -278,7 +285,9 @@
 				console.log('你移出了ID为' + this.moreId + '的书籍')
 			}
 		},
-		created() {}
+		created() {
+			this.getBookList()
+		}
 	}
 </script>
 
@@ -286,6 +295,17 @@
 	$bookTop:46px;
 	$bookCardHeight:200upx;
 	$second: 0.6s;
+
+	.juzhong {
+		position: fixed;
+		top: $stairTop;
+		/* #ifdef H5 */
+		top: 44px;
+		/* #endif */
+		left: 0;
+		right: 0;
+		bottom: $navHeight;
+	}
 
 	.bookrack-body {
 		position: fixed;

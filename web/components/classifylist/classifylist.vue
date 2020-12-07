@@ -47,7 +47,7 @@
 				<view class="books-box" v-for="(booksList,booksKey) in bookDataList.books" :key="booksKey" @click="booksBtn($event,booksKey,'bookHeight' + booksKey,booksList,booksList)"
 				 :id="'bookHeight' + booksKey">
 					<view class="books-image">
-						<image class="book-img" :src="booksList.url || url[booksKey%10]"></image>
+						<image class="book-img" :src="booksList.url || url[booksKey%15]"></image>
 					</view>
 					<view class="books-text">
 						<view class="text-box">
@@ -91,7 +91,14 @@
 					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
 					"https://s1.ax1x.com/2020/08/12/ajzdBV.png",
 					"https://s1.ax1x.com/2020/08/12/avSLRJ.png",
-					"https://s1.ax1x.com/2020/08/12/avpDSJ.png"
+					'https://s2.ax1x.com/2020/03/05/3THGsU.png',
+					'https://s2.ax1x.com/2020/03/04/35f6C4.png',
+					'https://s2.ax1x.com/2020/03/04/35fs5F.png',
+					'https://s2.ax1x.com/2020/03/04/35fhb6.png',
+					'https://s2.ax1x.com/2020/03/05/3T5pLj.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Ces.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Pwn.png',
+					'https://s2.ax1x.com/2020/03/05/3TH8MT.png'
 				],
 				sortList: ['最热', '最新', '最火'],
 			}

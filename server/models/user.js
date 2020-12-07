@@ -19,6 +19,7 @@ module.exports = {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'role'
     },
+    collect:Array, //图书收藏
     icon:String, //头像
     nickName: String, // 昵称
     phone: String, // 电话号码

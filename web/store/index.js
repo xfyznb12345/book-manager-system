@@ -11,12 +11,16 @@ const store = new Vuex.Store({
 			state.isLogin = true;
 			state.userInfo = res.userInfo;
 			uni.setStorageSync('user_token', res.token); //存入缓存
+			uni.setStorageSync('userInfo', res.userInfo); //存入缓存
 		},
 		logout(state) {
 			state.isLogin = false;
 			state.userInfo = {};
 			uni.removeStorage({
 				key: 'user_token'
+			})
+			uni.removeStorage({
+				key: 'userInfo'
 			})
 		}
 	},

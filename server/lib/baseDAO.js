@@ -163,10 +163,6 @@ class BaseDAO {
     const result = await this.model.updateMany(condition, data, options)
     return result
   }
-  async test () {
-    const list = await this.model.find({}, { code: 1, _id: 0 }).distinct('code')
-    return list
-  }
 }
 
 module.exports = BaseDAO

@@ -3,7 +3,8 @@ const AdverService = require('../services/AdvertService')
 const CategoryService = require('../services/CategoryService')
 const BookService = require('../services/BookService')
 const SortService = require('../services/SortService')
-const keyWord = require('../lib/commonFun')
+const { userHandler } = require('../middlewares/login')
+const UserService = require('../services/UserService')
 module.exports = {
   /**
    * 首页轮播图
@@ -64,106 +65,46 @@ module.exports = {
       throw new InvalidQueryError()
     }
     const list = await BookService.findById(id)
-    //关键词查出来开始
     const result = JSON.parse(JSON.stringify(list))
-    const arr = keyWord(result.code)
-    result.tagList = []
-    for(let i = 0;i<arr.length;i++){
-      let str = ''
-      let tag = {}
-      let temp = {}
-      let isOk = false
-      let isNone = true
-      let isOne = true
-      for (let key of arr[i]) {
-        str += key
-        if (isOk) {
-          tag = await SortService.findOne({ code: str })
-          if (!tag && isOne){
-            break
-          }
-          if (!tag) {
-            console.log(temp);
-            isNone = false
-            let sing = ''
-            for (let x of temp.name) {
-              if (x === '、') {
-                console.log(x)
-                result.tagList.push(sing)
-                sing = ''
-              } else {
-                sing += x
-              }
-            }
-            if (sing !== '') {
-              result.tagList.push(sing)
-            }
-            break
-          }
-          isOne = false
-          temp = tag
-        }
-        isOk = true
-      }
-      if (isNone && !isOne){
-        let sing = ''
-        for (let x of temp.name) {
-          if (x === '、') {
-            result.tagList.push(sing)
-            sing = ''
-          } else {
-            sing += x
-          }
-        }
-        if (sing !== '') {
-          result.tagList.push(sing)
-        }
-      }
+    //如果用户已登录判断是否收藏
+    const authorization = ctx.request.header.authorization
+    if(authorization){
+      const userId = userHandler(authorization)
+      const isCollect = await UserService.findOne({ _id: userId, collect: { $elemMatch: { $eq: id } } })
+      if (isCollect) result.collect = true
     }
-    // 截止
+    //关键词查出来开始
+    result.tagList = []
+    let str = result.code
+    if (str.indexOf(';') === -1){
+      let tagList = await SortService.findOne({ code: str })
+      while (!tagList && str.length > 1) {
+        str = str.substring(0, str.length - 1)
+        tagList = await SortService.findOne({ code: str })
+      }
+      await BookService.update({ code: result.code }, { code: str }, {}) //错误矫正
+      tagList && result.tagList.push(...tagList.name.split('、'))
+    }else{
+      str = str.split(';')
+      let newStr = ''
+      for(let i=0;i<str.length;i++){
+        let tagList = await SortService.findOne({ code: str[i] })
+        while (!tagList && str[i].length > 1) {
+          str[i] = str[i].substring(0, str[i].length - 1)
+          tagList = await SortService.findOne({ code: str [i]})
+        }
+        newStr += str[i] 
+        if(i !== str.length-1) newStr += ';'
+        tagList && result.tagList.push(...tagList.name.split('、'))
+      }
+      await BookService.update({ code: result.code }, { code: newStr }, {}) //错误矫正
+    }
     if (!list) {
       ctx.error = '找不到'
     } else {
       ctx.result = result
     }
     return next()
-  },
-  'GET /api/testp' :async(ctx,next) =>{
-    const result = await BookService.test()
-    // const result = ['A132;B34']
-    for(let i = 0;i<5;i++){
-      if(result[i].indexOf(';')){
-        const z = result[i].split(';')
-        for(let j = 0;j < z.length;j++){
-          let x = await SortService.findOne({ code: z[j] })
-          let p = z[j]
-          while (!x) {
-            p = p.slice(0, p.length - 1)
-            x = await SortService.findOne({ code: p })
-          }
-          console.log(x,z[j]);
-
-        }
-      }else{
-        let x = await SortService.findOne({ code: result[i] })
-        let p = result[i] 
-        while (!x) {
-          p = p.slice(0, p.length - 1)
-          x = await SortService.findOne({ code: p })
-        }
-        console.log(x, result[i] );
-                const condition = {
-          code: result[i]
-        }
-        const data = {
-          $set: {
-            code: x.code
-          }
-        }
-        const res = await BookService.update(condition, data, {})
-        console.log(res)
-      }
-    }
-    return next()
   }
 }
+

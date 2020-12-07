@@ -83,6 +83,7 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   padding-bottom: 20rpx;
+  overflow: hidden;
 }
 .book-detail .detail-right .tag.data-v-0e26d790 {
   padding-bottom: 5rpx;

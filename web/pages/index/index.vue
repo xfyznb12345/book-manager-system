@@ -11,7 +11,7 @@
 			<classify v-if="index === 1" />
 			<search v-if="index === 2" />
 		</view>
-		<bookrack v-if="index === 3" />
+		<bookrack v-if="index === 3" :reFrash="keyNum"/>
 		<mine v-if="index === 4" />
 		<!-- 底部标签栏 -->
 		<bottom @toIndex="toIndex"></bottom>
@@ -43,9 +43,14 @@
 				borderBottom: false, //导航栏底部是否显示下边框
 				index: 0,
 				head: '首页',
+				keyNum:true
 			}
 		},
+		onShow(){
+			this.keyNum = !this.keyNum
+		},
 		onLoad() {
+			
 		},
 		methods: {
 			toIndex(index) {

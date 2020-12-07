@@ -10489,7 +10489,15 @@ api.category = function (params) {return (0, _request.globalRequest)("".concat(a
 //分类图书列表
 api.bookList = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/bookList"), params, 'GET');};
 //获取图书详情
-api.bookInfo = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/bookInfo/").concat(params), 'GET');};var _default =
+api.bookInfo = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/bookInfo/").concat(params), '', 'GET');};
+//收藏图书
+api.collectBook = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/admin/collect"), params, 'POST');};
+//取消收藏
+api.collectBookDel = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/admin/collectDel"), params, 'POST');};
+//书架
+api.bookrack = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/admin/bookrack"), params, 'GET');};
+//移除书架
+api.rackCancel = function (params) {return (0, _request.globalRequest)("".concat(apiUrl, "/admin/rackCancel"), params, 'PUT');};var _default =
 api;exports.default = _default;
 
 /***/ }),
@@ -10504,10 +10512,16 @@ api;exports.default = _default;
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.globalRequest = globalRequest;var _uviewUi = _interopRequireDefault(__webpack_require__(/*! uview-ui */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 var headers = {};
+
 function globalRequest(url, data, method) {
   //拦截POST请求
   if (method === 'POST') headers['content-Type'] = 'application/json;charset=UTF-8';else
   headers['content-Type'] = 'application/json';
+  //是否存在token
+  var token = uni.getStorageSync('user_token');
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
   return new Promise(function (resolve, reject) {
     uni.request({
       url: url,
@@ -10517,7 +10531,7 @@ function globalRequest(url, data, method) {
       header: headers,
       success: function success(res) {
         if (res.statusCode && res.statusCode !== 200) {
-          reject(res);
+          reject(res.data);
         } else {
           if (res.data.code !== 200) {
             uni.showToast({
@@ -10525,9 +10539,10 @@ function globalRequest(url, data, method) {
               icon: 'none',
               mask: true });
 
-            resolve();
+            reject(res.data);
+          } else {
+            resolve(res.data.data);
           }
-          resolve(res.data.data);
         }
       },
       fail: function fail(err) {
@@ -10560,12 +10575,16 @@ var store = new _vuex.default.Store({
       state.isLogin = true;
       state.userInfo = res.userInfo;
       uni.setStorageSync('user_token', res.token); //存入缓存
+      uni.setStorageSync('userInfo', res.userInfo); //存入缓存
     },
     logout: function logout(state) {
       state.isLogin = false;
       state.userInfo = {};
       uni.removeStorage({
         key: 'user_token' });
+
+      uni.removeStorage({
+        key: 'userInfo' });
 
     } },
 

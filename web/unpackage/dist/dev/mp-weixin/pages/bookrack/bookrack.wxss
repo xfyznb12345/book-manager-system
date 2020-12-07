@@ -34,6 +34,13 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.juzhong.data-v-656782f4 {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  bottom: 49px;
+}
 .bookrack-body.data-v-656782f4 {
   position: fixed;
   top: 68px;

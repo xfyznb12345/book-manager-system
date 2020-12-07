@@ -1,1 +1,0 @@
-<view class="index-body data-v-57280228"><view class="content data-v-57280228"></view><block wx:if="{{index===4}}"><mine vue-id="8dd740cc-1" class="data-v-57280228" bind:__l="__l"></mine></block><bottom bind:toIndex="__e" vue-id="8dd740cc-2" data-event-opts="{{[['^toIndex',[['toIndex']]]]}}" class="data-v-57280228" bind:__l="__l"></bottom></view>

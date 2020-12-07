@@ -70,7 +70,9 @@
 					userName: this.userName,
 					passWord: this.passWord
 				}
-				const res = await this.$api.login(req)
+				const res = await this.$api.login(req).catch(err=>{
+					console.log(err)
+				})
 				if (res) {
 					uni.showToast({
 						icon: 'success',
