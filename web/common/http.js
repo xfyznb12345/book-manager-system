@@ -1,8 +1,8 @@
 let apiUrl = ""
 if (process.env.NODE_ENV === 'development') {
 	// 开发环境
-	// apiUrl = 'http://localhost:3000/api'
-	apiUrl = 'http://192.168.40.27:3000/api'
+	apiUrl = 'http://localhost:3000/api'
+	// apiUrl = 'http://192.168.40.27:3000/api'  //真机调试ip
 } else {
 	// 生产环境
 	apiUrl = 'https://*****.com/'
@@ -13,9 +13,9 @@ import {
 
 const api = {}
 api.imgUrl = 'http://localhost:3000'
+// api.imgUrl = 'http://192.168.40.27:3000' //真机调试ip
 //文件上传
 api.avatar = `${apiUrl}/admin/avatarUpload`
-// api.imgUrl = 'http://192.168.40.27:3000'
 //注册接口
 api.register = params => globalRequest(`${apiUrl}/register`, params, 'POST')
 //登录接口
@@ -28,12 +28,8 @@ api.category = params => globalRequest(`${apiUrl}/category`, params, 'GET')
 api.bookList = params => globalRequest(`${apiUrl}/bookList`, params, 'GET')
 //获取图书详情
 api.bookInfo = params => globalRequest(`${apiUrl}/bookInfo/${params}`, '', 'GET')
-//收藏图书
-api.collectBook = params => globalRequest(`${apiUrl}/admin/collect`, params, 'POST')
-//取消收藏
-api.collectBookDel = params => globalRequest(`${apiUrl}/admin/collectDel`, params, 'POST')
-//评分
-api.rateBook = params => globalRequest(`${apiUrl}/admin/rate`, params, 'POST')
+//书评分收藏
+api.bookCollectRate = params => globalRequest(`${apiUrl}/admin/collectRate`, params, 'POST')
 //搜索
 api.searchBook = params => globalRequest(`${apiUrl}/searchList`,params,'GET')
 //书架

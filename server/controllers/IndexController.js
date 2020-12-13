@@ -5,6 +5,7 @@ const BookService = require('../services/BookService')
 const SortService = require('../services/SortService')
 const { userHandler } = require('../middlewares/login')
 const UserService = require('../services/UserService')
+const InterestService = require('../services/InterestService')
 module.exports = {
   /**
    * 首页轮播图
@@ -68,16 +69,33 @@ module.exports = {
     const result = JSON.parse(JSON.stringify(list))
     //如果用户已登录判断是否收藏
     const authorization = ctx.request.header.authorization
-    if(authorization){
+    if (authorization) {
       const userId = userHandler(authorization)
-      const isCollect = await UserService.findOne({ _id: userId, bookRet: { $elemMatch: { bookId: id } } })
-      console.log(isCollect)
-      if (isCollect) result.collect = true
+      const condition = {
+        user: userId,
+        book: id
+      }
+      const back = {
+        collect: 1,
+        rate: 1,
+        book: 1,
+        _id: 0
+      }
+      const bookRet = await InterestService.findMany(condition, back)
+      if (bookRet.length > 0) {
+        result.bookRet = bookRet[0]
+      } else {
+        result.bookRet = {
+          book:id,
+          collect: false,
+          rate: 0
+        }
+      }
     }
     //关键词查出来开始
     result.tagList = []
     let str = result.code
-    if (str.indexOf(';') === -1){
+    if (str.indexOf(';') === -1) {
       let tagList = await SortService.findOne({ code: str })
       while (!tagList && str.length > 1) {
         str = str.substring(0, str.length - 1)
@@ -85,17 +103,17 @@ module.exports = {
       }
       await BookService.update({ code: result.code }, { code: str }, {}) //错误矫正
       tagList && result.tagList.push(...tagList.name.split('、'))
-    }else{
+    } else {
       str = str.split(';')
       let newStr = ''
-      for(let i=0;i<str.length;i++){
+      for (let i = 0; i < str.length; i++) {
         let tagList = await SortService.findOne({ code: str[i] })
         while (!tagList && str[i].length > 1) {
           str[i] = str[i].substring(0, str[i].length - 1)
-          tagList = await SortService.findOne({ code: str [i]})
+          tagList = await SortService.findOne({ code: str[i] })
         }
-        newStr += str[i] 
-        if(i !== str.length-1) newStr += ';'
+        newStr += str[i]
+        if (i !== str.length - 1) newStr += ';'
         tagList && result.tagList.push(...tagList.name.split('、'))
       }
       await BookService.update({ code: result.code }, { code: newStr }, {}) //错误矫正
@@ -110,9 +128,9 @@ module.exports = {
   /**
    * 书本模糊查询
    */
-  'GET /api/searchList' :async(ctx,next) => {
-    const {keyWord} = ctx.request.query
-    if(!keyWord){
+  'GET /api/searchList': async (ctx, next) => {
+    const { keyWord } = ctx.request.query
+    if (!keyWord) {
       throw new InvalidQueryError()
     }
     const reg = new RegExp(keyWord)
@@ -120,11 +138,11 @@ module.exports = {
       title: { $regex: reg }
     }
     const back = {
-      title:1,
-      author:1,
-      abstract:1
+      title: 1,
+      author: 1,
+      abstract: 1
     }
-    const result = await BookService.findManyPageList(filter,back,1,15)
+    const result = await BookService.findManyPageList(filter, back, 1, 15)
     if (!result) {
       ctx.error = '获取列表失败'
     } else {
@@ -135,13 +153,13 @@ module.exports = {
   /**
    * 兴趣标签
    */
-  'GET /api/interest' :async(ctx,next) => {
+  'GET /api/interest': async (ctx, next) => {
     const list = await CategoryService.findMany({}, { name: 1, _id: 0 })
     let result = []
-    list.forEach(val=>{
-      if(val.name.indexOf('、')){
+    list.forEach(val => {
+      if (val.name.indexOf('、')) {
         result.push(...val.name.split('、'))
-      }else{
+      } else {
         result.push(val.name)
       }
     })

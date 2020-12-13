@@ -12,12 +12,12 @@
 						<view class="tag-title" v-for="item in bookInfo.tagList">{{item}}</view>
 					</view>
 					<view class="grade">
-						<u-rate active-color="#FFB32F" :count="5" v-model="rate" @change="changeRate"/>
+						<u-rate active-color="#FFB32F" :count="5" v-model="state.rate" @change="changeRate" />
 					</view>
 				</view>
 				<view class="btn-box">
 					<view class="readBtn">借阅</view>
-					<view class="joinBtn" @click="collectBook">{{state ? '已收藏' : '加入收藏'}}</view>
+					<view class="joinBtn" @click="changeCollect">{{state.collect ? '已收藏' : '加入收藏'}}</view>
 				</view>
 			</view>
 		</view>
@@ -55,7 +55,7 @@
 								努力努力再努力
 							</view>
 							<view class="star">
-								<u-rate active-color="#FFB32F" size="26" current="5" :disabled='true' @change="changeRate"/>
+								<u-rate active-color="#FFB32F" size="26" current="5" :disabled='true' @change="changeRate" />
 							</view>
 						</view>
 						<view class="message-praise">
@@ -79,7 +79,7 @@
 	export default {
 		data() {
 			return {
-				rate:0,
+				rate: 0,
 				url: [
 					"https://s1.ax1x.com/2020/08/12/ajXteS.png",
 					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
@@ -101,7 +101,7 @@
 					'https://s2.ax1x.com/2020/03/05/3TH8MT.png'
 				],
 				bookInfo: {},
-				state:false ,//收藏状态
+				state: {}, //收藏评分状态
 				jiesha: `《人性的弱点》自出版以来，已被译成 58 种文字畅销于世界各地，
 				全球总销量达 9000 余万册，拥有 4 亿多读者，稳居成功励志类图书榜首，
 				是人类出版史上继《圣经》之后的第二大畅销书。
@@ -124,59 +124,39 @@
 				const res = await this.$api.bookInfo(id)
 				if (res) {
 					this.bookInfo = res
-					this.bookInfo.image = this.url[Math.floor((Math.random()*this.url.length))]
-					this.bookInfo.collect && (this.state = true)
-					res.abstract && (this.jiesha = res.abstract)
+					this.state = this.bookInfo.bookRet
+					this.bookInfo.image = this.url[Math.floor((Math.random() * this.url.length))] //随机安排一张图片
+					res.abstract && (this.jiesha = res.abstract) //安排一下简介
 				}
 			},
-			//收藏图书
-			async collectBook() {
-				if(this.state){
-					const res = await this.$api.collectBookDel({
-						bookId: this.bookInfo._id
-					}).catch(err => {
-						this.$refs.uToast.show({
-							title: '请先登录',
-							type: 'warning'
-						})
-					
-					})
-					if (res) {
-						this.$refs.uToast.show({
-							title: '取消成功',
-							type: 'success'
-						})
-						this.state = false
-					}
-				}else{
-					const res = await this.$api.collectBook({
-						bookId: this.bookInfo._id
-					}).catch(err => {
-						this.$refs.uToast.show({
-							title: '请先登录',
-							type: 'warning'
-						})
-					})
-					if (res) {
-						this.$refs.uToast.show({
-							title: '收藏成功',
-							type: 'success'
-						})
-						this.state = true
-					}
-				}
+			//改变收藏状态
+			changeCollect() {
+				this.state.collect = !this.state.collect
+				this.changeColRate()
 			},
-			rateBtn(value) {
-				console.log(value)
+			changeRate(value) { //改变评分
+				this.state.rate = value
+				this.changeColRate()
 			},
-			async changeRate(value){
-				const res = this.$api.rateBook({bookId: this.bookInfo._id,rate:value})
-				if(res){
+			//收藏评价图书
+			async changeColRate() {
+				const res = await this.$api.bookCollectRate(
+					this.state
+				).catch(err => {
 					this.$refs.uToast.show({
-						title: '评分成功',
+						title: '请先登录',
+						type: 'warning'
+					})
+					this.state.collect = !this.state.collect //失败再改回来
+					this.state.rate = 0
+				})
+				if (res) {
+					this.$refs.uToast.show({
+						title: '修改成功',
 						type: 'success'
 					})
 				}
+				console.log(this.state)
 			},
 			iconActive() {
 				this.iconOFF = !this.iconOFF

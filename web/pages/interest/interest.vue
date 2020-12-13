@@ -58,8 +58,7 @@
 			async getTagList() {
 				const res = await this.$api.interest()
 				if (res) {
-					let handList = this.userInfo.interest
-					
+					let handList = this.userInfo.interest || []
 					let tagList = res.filter(item=> handList.indexOf(item)===-1)
 					for (let i = 0; i < res.length; i++) {
 						if(i<tagList.length){

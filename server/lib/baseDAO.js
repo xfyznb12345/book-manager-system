@@ -136,6 +136,13 @@ class BaseDAO {
     return result
   }
   /**
+   * 更新单个
+   */
+  async findOneAndUpdate (condition, data, options) {
+    const result = await this.model.update(condition, data, options)
+    return result
+  }
+  /**
    * 新增
    * @param {Object} data Json数据
    * @return {Object} 新增的数据

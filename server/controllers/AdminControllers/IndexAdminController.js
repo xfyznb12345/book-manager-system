@@ -4,81 +4,29 @@ const { InvalidQueryError } = require('../../lib/error')
 const BookService = require('../../services/BookService')
 const { userHandler } = require('../../middlewares/login')
 const UserService = require('../../services/UserService')
+const InterestService = require('../../services/InterestService')
 const ImgUploadService = require('../../services/fileService/ImgUploadService')
 module.exports = {
   /**
-   * 添加收藏
+   * 图书收藏评价
    */
-  'POST /api/admin/collect': async (ctx, next) => {
-    const { bookId } = ctx.request.body
-    if (!bookId) {
-      throw new InvalidQueryError()
-    }
-    const authorization = ctx.request.header.authorization
-    const userId = userHandler(authorization)
-    const data = {
-      '$addToSet': {
-        bookRet: {
-          bookId: bookId,
-          collect: true
-        }
-      }
-    }
-    const result = await UserService.updateById(userId, data)
-    if (!result) {
-      ctx.error = 'error'
-    } else {
-      ctx.result = 'success'
-    }
-    return next()
-  },
-  /**
-   * 取消收藏
-   */
-  'POST /api/admin/collectDel': async (ctx, next) => {
-    const { bookId } = ctx.request.body
-    if (!bookId) {
-      throw new InvalidQueryError()
-    }
-    const authorization = ctx.request.header.authorization
-    const userId = userHandler(authorization)
-    const data = {
-      '$pull': {
-        bookRet: {
-          bookId
-        }
-      }
-    }
-    const result = await UserService.updateById(userId, data)
-    if (!result) {
-      ctx.error = 'error'
-    } else {
-      ctx.result = 'success'
-    }
-    return next()
-  },
-  /**
-   * 评分
-   */
-  'POST /api/admin/rate': async (ctx, next) => {
-    const { rate, bookId } = ctx.request.body
-    if (!rate || !bookId) {
+  'POST /api/admin/collectRate' :async (ctx,next)=>{
+    const {book,collect,rate} = ctx.request.body
+    if(!book){
       throw new InvalidQueryError()
     }
     const authorization = ctx.request.header.authorization
     const userId = userHandler(authorization)
     const condition = {
-      _id:userId,
-      'bookRet.bookId':bookId
+      book,
+      user:userId,
     }
     const data = {
-      '$set': {
-        bookRet: {
-          rate
-        }
-      }
+      collect,
+      rate
     }
-    const result = await UserService.update(condition, data)
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true }
+    const result = await InterestService.findOneAndUpdate(condition, data,options)
     if (!result) {
       ctx.error = 'error'
     } else {
@@ -92,11 +40,14 @@ module.exports = {
   'GET /api/admin/bookrack': async (ctx, next) => {
     const authorization = ctx.request.header.authorization
     const userId = userHandler(authorization)
-    const userInfo = await UserService.findById(userId)
-    const result = []
-    for (let i = 0; i < userInfo.collect.length; i++) {
-      result.push(await BookService.findById(userInfo.collect[i]))
+    const conditon = {
+      user:userId,
+      collect:true
     }
+    const list = await InterestService.findByModelNoPage('book',conditon)
+    const result = list.map(val=>{
+      return val.book
+    })
     if (!result) {
       ctx.error = 'error'
     } else {

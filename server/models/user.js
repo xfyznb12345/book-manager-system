@@ -19,13 +19,7 @@ module.exports = {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'role'
     },
-    // collect:Array, //图书收藏
-    // interest:Array, //兴趣爱好
-    bookRet: [{
-      bookId: String,
-      collect:Boolean,
-      rate: Number
-    }],
+    interest:Array, //兴趣爱好
     icon: String, //头像
     nickName: String, // 昵称
     phone: String, // 电话号码
