@@ -94,13 +94,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uRate: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-rate/u-rate */ "node-modules/uview-ui/components/u-rate/u-rate").then(__webpack_require__.bind(null, /*! uview-ui/components/u-rate/u-rate.vue */ 170))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-rate/u-rate */ "node-modules/uview-ui/components/u-rate/u-rate").then(__webpack_require__.bind(null, /*! uview-ui/components/u-rate/u-rate.vue */ 191))
   },
   uReadMore: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-read-more/u-read-more */ "node-modules/uview-ui/components/u-read-more/u-read-more").then(__webpack_require__.bind(null, /*! uview-ui/components/u-read-more/u-read-more.vue */ 177))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-read-more/u-read-more */ "node-modules/uview-ui/components/u-read-more/u-read-more").then(__webpack_require__.bind(null, /*! uview-ui/components/u-read-more/u-read-more.vue */ 198))
   },
   uToast: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 184))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-toast/u-toast */ "node-modules/uview-ui/components/u-toast/u-toast").then(__webpack_require__.bind(null, /*! uview-ui/components/u-toast/u-toast.vue */ 205))
   }
 }
 var render = function() {
@@ -221,6 +221,7 @@ var _default =
 {
   data: function data() {
     return {
+      rate: 0,
       url: [
       "https://s1.ax1x.com/2020/08/12/ajXteS.png",
       "https://s1.ax1x.com/2020/08/12/ajjt6x.png",
@@ -297,7 +298,6 @@ var _default =
                       title: '请先登录',
                       type: 'warning' });
 
-
                   }));case 9:_res = _context2.sent;
                 if (_res) {
                   _this2.$refs.uToast.show({
@@ -310,6 +310,15 @@ var _default =
     },
     rateBtn: function rateBtn(value) {
       console.log(value);
+    },
+    changeRate: function changeRate(value) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+                res = _this3.$api.rateBook({ bookId: _this3.bookInfo._id, rate: value });
+                if (res) {
+                  _this3.$refs.uToast.show({
+                    title: '评分成功',
+                    type: 'success' });
+
+                }case 2:case "end":return _context3.stop();}}}, _callee3);}))();
     },
     iconActive: function iconActive() {
       this.iconOFF = !this.iconOFF;

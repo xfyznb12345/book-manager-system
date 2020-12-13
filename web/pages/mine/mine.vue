@@ -4,10 +4,10 @@
 			<image class="bg" src="/static/user-bg.jpg"></image>
 			<view class="user-info-box">
 				<view class="portrait-box" @tap="chooseAvatar">
-					<image class="portrait" :src="userInfo.portrait || '/static/missing-face.png'"></image>
+					<image class="portrait" :src="userInfo.icon ? (this.$api.imgUrl + userInfo.icon) : '/static/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username">{{ isLogin ? userInfo.userName : '游客'}}</text>
+					<text class="username">{{ !hasLogin ? '游客':userInfo.nickName ? userInfo.nickName:userInfo.userName}}</text>
 				</view>
 			</view>
 		</view>
@@ -23,27 +23,42 @@
 
 		<view class="user-box paddingInfo">
 			<view class="cu-list menu shadow">
+				<!-- 个人资料 -->
+				<view class="cu-item solid-top">
+					<button class="cu-btn content" @click="infoChange">
+						<view class="content">
+							<text class="cuIcon-infofill text-yellow"></text>
+							<text class="text-grey">个人资料</text>
+						</view>
+						<view class="action">
+							<text class="cuIcon-right text-grey"></text>
+						</view>
+					</button>
+				</view>
 				<!-- 收藏 -->
 				<view class="cu-item solid-top">
-					<view class="content">
-						<text class="cuIcon-favorfill text-orange"></text>
-						<text class="text-grey">我的收藏</text>
-					</view>
-					<view class="action">
-						<text class="cuIcon-right text-grey"></text>
-					</view>
+					<button class="cu-btn content" @click="navigate">
+						<view class="content">
+							<text class="cuIcon-favorfill text-orange"></text>
+							<text class="text-grey">我的借阅</text>
+						</view>
+						<view class="action">
+							<text class="cuIcon-right text-grey"></text>
+						</view>
+					</button>
 				</view>
 				<!-- 标签 -->
 				<view class="cu-item ">
+					<button class="cu-btn content" @click="interest">
 					<view class="content">
 						<text class="cuIcon-tag text-red  margin-right-xs"></text>
 						<text class="text-grey">我的兴趣</text>
 					</view>
 					<view class="action">
-						<view class="cu-tag round bg-orange light">音乐</view>
-						<view class="cu-tag round bg-olive light">电影</view>
-						<view class="cu-tag round bg-blue light">旅行</view>
+						<text class="cuIcon-right text-grey"></text>
+						<!-- <view class="cu-tag round bg-orange light">{{userInfo.interest[0]}}</view> -->
 					</view>
+					</button>
 				</view>
 				<!-- 退出 -->
 				<view class="cu-item ">
@@ -65,23 +80,29 @@
 		computed: {
 			...mapState(['isLogin', 'userInfo'])
 		},
+		watch:{
+			isLogin(){
+				this.hasLogin = this.isLogin
+			}
+		},
 		data() {
 			return {
+				hasLogin: false, //登录状态
 				cuIconList: [{
 					cuIcon: 'cardboardfill',
 					color: 'red',
 					badge: 120,
-					name: 'VR'
+					name: '好友'
 				}, {
 					cuIcon: 'recordfill',
 					color: 'orange',
 					badge: 1,
-					name: '录像'
+					name: '书坛'
 				}, {
 					cuIcon: 'picfill',
 					color: 'yellow',
 					badge: 0,
-					name: '图像'
+					name: '动态'
 				}, {
 					cuIcon: 'noticefill',
 					color: 'olive',
@@ -91,30 +112,55 @@
 			}
 		},
 		methods: {
-			chooseAvatar() {
-				this.$u.route({
-					url: './u-avatar-cropper',
-					params: {
-						// 输出图片宽度，高等于宽，单位px
-						destWidth: 300,
-						// 裁剪框宽度，高等于宽，单位px
-						rectWidth: 200,
-						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
-						fileType: 'jpg',
-					}
+			...mapMutations(['logout']),
+			infoChange(){ //个人资料修改
+			
+				// uni.navigateTo({
+				// 	url: '../set/set',
+				// });
+			},
+			//跳转借阅
+			navigate() {
+				
+			},
+			interest(){ //打开兴趣单
+				uni.navigateTo({
+					url:'../interest/interest'
 				})
 			},
-			...mapMutations(['logout']),
-			//检查login
-			checkLogin() {
-				uni.getStorage({
-					key: 'user_token',
-					fail(err) {
-						uni.navigateTo({
-							url: '../login/login'
+			chooseAvatar() { //上传头像
+				uni.chooseImage({
+					success: (chooseImageRes) => {
+						const tempFilePaths = chooseImageRes.tempFilePaths;
+						uni.uploadFile({
+							url: this.$api.avatar,
+							filePath: tempFilePaths[0],
+							header: {
+								'Authorization': 'Bearer ' + uni.getStorageSync('user_token')
+							},
+							name: 'icon',
+							formData: {
+								id: this.userInfo._id
+							},
+							success: (res) => {
+								this.$store.commit('setUserInfo', JSON.parse(res.data).data)
+							}
 						})
 					}
 				})
+			},
+			checkLogin() { //检查登录
+				try {
+					const value = uni.getStorageSync('user_token');
+					if (value) {
+						this.hasLogin = true
+						this.$store.commit('setUserInfo', uni.getStorageSync('userInfo'))
+					} else {
+						this.hasLogin = false
+					}
+				} catch (e) {
+					// error
+				}
 			},
 			//退出登录
 			loginOut() {
@@ -129,9 +175,11 @@
 			},
 		},
 		created() {
-			const loginRes = this.checkLogin();
-			if (!loginRes) {
-				return false;
+			this.checkLogin()
+			if (!this.hasLogin) {
+				uni.navigateTo({
+					url: '../login/login'
+				})
 			}
 		}
 	}

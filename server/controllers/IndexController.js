@@ -70,7 +70,8 @@ module.exports = {
     const authorization = ctx.request.header.authorization
     if(authorization){
       const userId = userHandler(authorization)
-      const isCollect = await UserService.findOne({ _id: userId, collect: { $elemMatch: { $eq: id } } })
+      const isCollect = await UserService.findOne({ _id: userId, bookRet: { $elemMatch: { bookId: id } } })
+      console.log(isCollect)
       if (isCollect) result.collect = true
     }
     //关键词查出来开始
@@ -101,6 +102,51 @@ module.exports = {
     }
     if (!list) {
       ctx.error = '找不到'
+    } else {
+      ctx.result = result
+    }
+    return next()
+  },
+  /**
+   * 书本模糊查询
+   */
+  'GET /api/searchList' :async(ctx,next) => {
+    const {keyWord} = ctx.request.query
+    if(!keyWord){
+      throw new InvalidQueryError()
+    }
+    const reg = new RegExp(keyWord)
+    const filter = {
+      title: { $regex: reg }
+    }
+    const back = {
+      title:1,
+      author:1,
+      abstract:1
+    }
+    const result = await BookService.findManyPageList(filter,back,1,15)
+    if (!result) {
+      ctx.error = '获取列表失败'
+    } else {
+      ctx.result = result
+    }
+    return next()
+  },
+  /**
+   * 兴趣标签
+   */
+  'GET /api/interest' :async(ctx,next) => {
+    const list = await CategoryService.findMany({}, { name: 1, _id: 0 })
+    let result = []
+    list.forEach(val=>{
+      if(val.name.indexOf('、')){
+        result.push(...val.name.split('、'))
+      }else{
+        result.push(val.name)
+      }
+    })
+    if (!result) {
+      ctx.error = '获取列表失败'
     } else {
       ctx.result = result
     }

@@ -85,6 +85,18 @@
 				"backgroundColor": "#fff",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/set/set",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/interest/interest",
+			"style": {
+				"navigationBarTitleText": "选择兴趣"
+			}
 		}
 	],
 	"globalStyle": {

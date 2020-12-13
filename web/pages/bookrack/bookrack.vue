@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 未登录条件 -->
-		<view class="cu-bar btn-group juzhong" v-if="!isLogin">
+		<view class="cu-bar btn-group juzhong" v-if="!hasLogin">
 			<button class="cu-btn bg-black shadow-blur round lg" @click="login">请先登录</button>
 		</view>
 		<!-- 登录了 -->
@@ -96,18 +96,12 @@
 		mapState
 	} from 'vuex'
 	export default {
-		props:{
-			reFrash:Boolean
-		},
-		computed: {
-			...mapState(['isLogin'])
+		props: {
+			reFrash: Boolean
 		},
 		watch: {
-			isLogin() { //当登录状态发生改变
-				this.getBookList()
-			},
-			reFrash(){ //页面返回时重新请求
-				this.getBookList()
+			reFrash() { //页面返回时重新请求
+				this.checkLogin()
 			}
 		},
 		components: {},
@@ -123,6 +117,7 @@
 				moreOff: false, //更多弹窗开关
 				moreId: '', //移除书籍ID
 				bookData: [],
+				hasLogin: '', //是否登录
 				url: [
 					'https://s2.ax1x.com/2020/03/05/3THGsU.png',
 					'https://s2.ax1x.com/2020/03/04/35f6C4.png',
@@ -154,7 +149,7 @@
 					this.bookData = res
 				}
 			},
-			login() { //挑战登录
+			login() { //跳转登录
 				uni.navigateTo({
 					url: '../login/login'
 				})
@@ -190,7 +185,7 @@
 						this.checkAllOff = false
 					}
 				} else { //非多选状态下的事件
-				console.log(this.bookData[value])
+					console.log(this.bookData[value])
 					// 跳转页面
 					uni.navigateTo({
 						url: `../../pages/booksInfo/booksInfo?id=${this.bookData[value]._id}`
@@ -279,14 +274,41 @@
 			examine() { //查看详情
 				this.moreOff = false
 				console.log('你查看了ID为' + this.moreId + '的书籍详情')
+				// 跳转页面
+				uni.navigateTo({
+					url: `../../pages/booksInfo/booksInfo?id=${this.moreId}`
+				})
 			},
-			shiftOut() { //移出按钮
+			async shiftOut() { //移出按钮
 				this.moreOff = false
+				const res = await this.$api.collectBookDel(this.moreId).catch(err => {
+					console.log(err)
+				})
+				if (res) {
+					uni.showToast({
+						icon: 'none',
+						title: '移除成功'
+					})
+					this.getBookList()
+				}
 				console.log('你移出了ID为' + this.moreId + '的书籍')
+			},
+			checkLogin() { //检查登录
+				try {
+					const value = uni.getStorageSync('user_token');
+					if (value) {
+						this.hasLogin = true
+						this.getBookList()
+					} else {
+						this.hasLogin = false
+					}
+				} catch (e) {
+					// error
+				}
 			}
 		},
 		created() {
-			this.getBookList()
+			this.checkLogin()
 		}
 	}
 </script>

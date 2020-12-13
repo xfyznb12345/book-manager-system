@@ -114,7 +114,12 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var imgList = function imgList() {__webpack_require__.e(/*! require.ensure | components/imglist/imglist */ "components/imglist/imglist").then((function () {return resolve(__webpack_require__(/*! ../../components/imglist/imglist.vue */ 156));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var imgListTwo = function imgListTwo() {__webpack_require__.e(/*! require.ensure | components/imglisttwo/imglisttwo */ "components/imglisttwo/imglisttwo").then((function () {return resolve(__webpack_require__(/*! ../../components/imglisttwo/imglisttwo.vue */ 163));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var imgList = function imgList() {__webpack_require__.e(/*! require.ensure | components/imglist/imglist */ "components/imglist/imglist").then((function () {return resolve(__webpack_require__(/*! ../../components/imglist/imglist.vue */ 170));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var imgListTwo = function imgListTwo() {__webpack_require__.e(/*! require.ensure | components/imglisttwo/imglisttwo */ "components/imglisttwo/imglisttwo").then((function () {return resolve(__webpack_require__(/*! ../../components/imglisttwo/imglisttwo.vue */ 177));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var imgListThree = function imgListThree() {__webpack_require__.e(/*! require.ensure | components/imglistthree/imglistthree */ "components/imglistthree/imglistthree").then((function () {return resolve(__webpack_require__(/*! ../../components/imglistthree/imglistthree */ 184));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
 
 
 
@@ -145,11 +150,17 @@ __webpack_require__.r(__webpack_exports__);
 {
   components: {
     imgList: imgList,
-    imgListTwo: imgListTwo },
+    imgListTwo: imgListTwo,
+    imgListThree: imgListThree },
 
   data: function data() {
     return {
-      searchText: "三体",
+      searchText: '',
+      isSearch: false,
+      searchList: [{
+        head: '搜索结果',
+        data: [] }],
+
       imageLists: [{
         head: '猜你喜欢',
         imgdata: [{
@@ -222,14 +233,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     inputBtn: function inputBtn() {
-      uni.navigateTo({
-        url: '../../pages/searchList/searchList?id=true' });
-
+      // uni.navigateTo({
+      // 	url: '../../pages/searchList/searchList?id=true'
+      // })
     },
-    searchBtn: function searchBtn() {
-      console.log(12323123);
+    searchBtn: function searchBtn() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (
+                _this.searchText) {_context.next = 4;break;} //空值
+                _this.isSearch = false;_context.next = 8;break;case 4:_context.next = 6;return (
+
+                  _this.$api.searchBook({
+                    keyWord: _this.searchText }).
+                  catch(function (err) {
+                    console.log(err);
+                  }));case 6:res = _context.sent;
+                if (res) {
+                  _this.searchList[0].data = res.list;
+                  _this.isSearch = true;
+                }case 8:case "end":return _context.stop();}}}, _callee);}))();
+
+
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

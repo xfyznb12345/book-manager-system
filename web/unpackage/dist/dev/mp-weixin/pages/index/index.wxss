@@ -72,7 +72,7 @@
   color: #333;
 }
 .input-btn.data-v-4cedc0c6 {
-  padding: 40rpx 30rpx;
+  padding: 20rpx 30rpx;
 }
 .input-btn .input-box.data-v-4cedc0c6 {
   height: 104rpx;
@@ -82,11 +82,17 @@
           border-radius: 8rpx;
   background-color: #ECF3FD;
 }
+.input-btn .input-box .inputStyle.data-v-4cedc0c6 {
+  height: 74rpx;
+  color: #0086E7;
+  font-size: 28rpx;
+}
 .input-btn .input-box .input-left.data-v-4cedc0c6 {
   float: left;
   width: calc(100% - 60rpx);
   color: #0086E7;
   font-size: 28rpx;
+  padding: 16rpx 0;
 }
 .input-btn .input-box .input-right.data-v-4cedc0c6 {
   float: right;

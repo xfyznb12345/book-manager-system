@@ -8,7 +8,9 @@
     "pages/search/search",
     "pages/details/details",
     "pages/login/login",
-    "pages/login/register"
+    "pages/login/register",
+    "pages/set/set",
+    "pages/interest/interest"
   ],
   "subPackages": [],
   "window": {
@@ -18,5 +20,5 @@
     "backgroundColor": "#F8F8F8"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap90.json"
+  "sitemapLocation": "sitemap18.json"
 }

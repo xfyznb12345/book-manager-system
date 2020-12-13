@@ -3,20 +3,25 @@
 		<view class="input-btn">
 			<view class="input-box" @click="inputBtn">
 				<view class="input-left">
-					三体
+					<input class="inputStyle" maxlength="150" confirm-type="go" v-model="searchText" ref='searchref' placeholder="请输入搜索内容" />
 				</view>
-				<view class="input-right" @click.stop="searchBtn">
+				<view class="input-right" @click="searchBtn">
 					<i class="iconfont search" />
 				</view>
 			</view>
 		</view>
-		<view>
+		<!-- 未搜索 -->
+		<view v-if="!isSearch">
 			<!-- 猜你喜欢图文列表 -->
 			<imgList :imageList="imageLists" />
 			<!-- 听书图文列表 -->
 			<imgList :imageList="listenList" />
 			<!-- 精品好书图文列表 -->
 			<imgListTwo :imglisttwo="likeList" />
+		</view>
+		<!-- 搜索时 -->
+		<view v-else>
+			<imgListThree :imglistthree="searchList" />
 		</view>
 	</view>
 
@@ -25,15 +30,21 @@
 <script>
 	import imgList from '../../components/imglist/imglist.vue'
 	import imgListTwo from '../../components/imglisttwo/imglisttwo.vue'
-
+	import imgListThree from '../../components/imglistthree/imglistthree'
 	export default {
 		components: {
 			imgList,
-			imgListTwo
+			imgListTwo,
+			imgListThree
 		},
 		data() {
 			return {
-				searchText: "三体",
+				searchText: '',
+				isSearch: false,
+				searchList: [{
+					head: '搜索结果',
+					data: []
+				}],
 				imageLists: [{
 					head: '猜你喜欢',
 					imgdata: [{
@@ -106,12 +117,25 @@
 		},
 		methods: {
 			inputBtn() {
-				uni.navigateTo({
-					url: '../../pages/searchList/searchList?id=true'
-				})
+				// uni.navigateTo({
+				// 	url: '../../pages/searchList/searchList?id=true'
+				// })
 			},
-			searchBtn() {
-				console.log(12323123)
+			async searchBtn() {
+				if (!this.searchText) { //空值
+					this.isSearch = false
+				} else { //有值
+					const res = await this.$api.searchBook({
+						keyWord: this.searchText
+					}).catch(err => {
+						console.log(err)
+					})
+					if (res) {
+						this.searchList[0].data = res.list
+						this.isSearch = true
+					}
+				}
+
 			},
 		}
 	}
@@ -124,7 +148,6 @@
 		font-size: 32upx;
 		padding: 0 $bleed;
 	}
-
 	.search-body {
 		position: fixed;
 		top: 0 !important;
@@ -163,7 +186,7 @@
 	}
 
 	.input-btn {
-		padding: 40upx $bleed;
+		padding: 20upx $bleed;
 
 		.input-box {
 			height: 104upx;
@@ -172,11 +195,18 @@
 			border-radius: 8upx;
 			background-color: $lightBlue;
 
+			.inputStyle {
+				height: 74upx;
+				color: $dominantHue;
+				font-size: 28upx;
+			}
+
 			.input-left {
 				float: left;
 				width: calc(100% - 60upx);
 				color: $dominantHue;
 				font-size: 28upx;
+				padding: 16upx 0;
 			}
 
 			.input-right {
@@ -193,6 +223,27 @@
 			}
 		}
 	}
+
+	// .input-btn {
+	// 		padding: 40upx $bleed 0 $bleed;
+
+	// 		.input-box {
+	// 			height: 104upx;
+	// 			padding: 0 10upx 0 30upx;
+	// 			border-radius: 8upx;
+	// 			background-color: $lightBlue;
+
+	// 			.input-left {
+	// 				float: left;
+	// 				width: calc(100% - 60upx);
+	// 				padding: 16upx 0;
+
+	// 				.inputStyle {
+	// 					height: 74upx;
+	// 					color: $dominantHue;
+	// 					font-size: 28upx;
+	// 				}
+	// 			}
 
 	@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
 		.search-body {

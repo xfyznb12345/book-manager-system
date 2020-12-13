@@ -182,7 +182,7 @@ var _vuex = __webpack_require__(/*! vuex */ 43);function _interopRequireDefault(
 //
 //
 //
-var _this;var wInput = function wInput() {__webpack_require__.e(/*! require.ensure | components/watch-login/watch-input */ "components/watch-login/watch-input").then((function () {return resolve(__webpack_require__(/*! ../../components/watch-login/watch-input.vue */ 191));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var wButton = function wButton() {__webpack_require__.e(/*! require.ensure | components/watch-login/watch-button */ "components/watch-login/watch-button").then((function () {return resolve(__webpack_require__(/*! ../../components/watch-login/watch-button.vue */ 198));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { data: function data() {return { userName: '', //用户名
+var _this;var wInput = function wInput() {__webpack_require__.e(/*! require.ensure | components/watch-login/watch-input */ "components/watch-login/watch-input").then((function () {return resolve(__webpack_require__(/*! ../../components/watch-login/watch-input.vue */ 212));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var wButton = function wButton() {__webpack_require__.e(/*! require.ensure | components/watch-login/watch-button */ "components/watch-login/watch-button").then((function () {return resolve(__webpack_require__(/*! ../../components/watch-login/watch-button.vue */ 219));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { data: function data() {return { userName: '', //用户名
       passWord: '', //密码
       showAgree: true, //协议是否选择
       isRotate: false //是否加载旋转

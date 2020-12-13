@@ -12,7 +12,7 @@
 			<search v-if="index === 2" />
 		</view>
 		<bookrack v-if="index === 3" :reFrash="keyNum"/>
-		<mine v-if="index === 4" />
+		<mine v-if="index === 4"/>
 		<!-- 底部标签栏 -->
 		<bottom @toIndex="toIndex"></bottom>
 
@@ -50,7 +50,6 @@
 			this.keyNum = !this.keyNum
 		},
 		onLoad() {
-			
 		},
 		methods: {
 			toIndex(index) {

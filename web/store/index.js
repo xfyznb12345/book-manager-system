@@ -22,6 +22,12 @@ const store = new Vuex.Store({
 			uni.removeStorage({
 				key: 'userInfo'
 			})
+		},
+		//刷新赋值
+		setUserInfo(state,val){
+			state.userInfo = val
+			uni.setStorageSync('userInfo', val); //存入缓存
+			state.isLogin = true
 		}
 	},
 	actions: {}

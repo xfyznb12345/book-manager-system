@@ -1,4 +1,5 @@
 <script>
+	import Vue from 'vue'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -21,18 +22,19 @@
 	@import './static/css/skeleton.scss';
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
+
 	/*每个页面公共css */
 	page {
 		font-size: 24upx;
 		color: $blackAll;
 		font-family: 'PingFangSC-Regular', 'Source Han Sans CN' !important;
 	}
-	
+
 	image {
 		width: auto;
 		height: auto;
 	}
-	
+
 	// 高度不包括内外边距解决方法
 	* {
 		box-sizing: border-box;

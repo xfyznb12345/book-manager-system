@@ -10,24 +10,30 @@ module.exports = {
     passWord: {
       type: String,
       required: true,
-      select:false,
-      set(val){
-        return require('bcrypt').hashSync(val,10)
+      select: false,
+      set (val) {
+        return require('bcrypt').hashSync(val, 10)
       }
     }, // 密码
-    role:{
+    role: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'role'
     },
-    collect:Array, //图书收藏
-    icon:String, //头像
+    // collect:Array, //图书收藏
+    // interest:Array, //兴趣爱好
+    bookRet: [{
+      bookId: String,
+      collect:Boolean,
+      rate: Number
+    }],
+    icon: String, //头像
     nickName: String, // 昵称
     phone: String, // 电话号码
     email: String, // 邮箱
     birthday: String, // 生日
-    status:{
-      type:Number,
-      default:1
+    status: {
+      type: Number,
+      default: 1
     },
     last_login_time: String, // 上次登录时间
     create_time: {

@@ -4,6 +4,7 @@
   "backgroundColor": "#fff",
   "usingComponents": {
     "img-list": "/components/imglist/imglist",
-    "img-list-two": "/components/imglisttwo/imglisttwo"
+    "img-list-two": "/components/imglisttwo/imglisttwo",
+    "img-list-three": "/components/imglistthree/imglistthree"
   }
 }

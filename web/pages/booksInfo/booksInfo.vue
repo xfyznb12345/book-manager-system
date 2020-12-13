@@ -12,7 +12,7 @@
 						<view class="tag-title" v-for="item in bookInfo.tagList">{{item}}</view>
 					</view>
 					<view class="grade">
-						<u-rate active-color="#FFB32F" current="5" :disabled='true' />
+						<u-rate active-color="#FFB32F" :count="5" v-model="rate" @change="changeRate"/>
 					</view>
 				</view>
 				<view class="btn-box">
@@ -55,7 +55,7 @@
 								努力努力再努力
 							</view>
 							<view class="star">
-								<u-rate active-color="#FFB32F" size="26" current="5" :disabled='true' />
+								<u-rate active-color="#FFB32F" size="26" current="5" :disabled='true' @change="changeRate"/>
 							</view>
 						</view>
 						<view class="message-praise">
@@ -79,6 +79,7 @@
 	export default {
 		data() {
 			return {
+				rate:0,
 				url: [
 					"https://s1.ax1x.com/2020/08/12/ajXteS.png",
 					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
@@ -155,7 +156,6 @@
 							title: '请先登录',
 							type: 'warning'
 						})
-					
 					})
 					if (res) {
 						this.$refs.uToast.show({
@@ -168,6 +168,15 @@
 			},
 			rateBtn(value) {
 				console.log(value)
+			},
+			async changeRate(value){
+				const res = this.$api.rateBook({bookId: this.bookInfo._id,rate:value})
+				if(res){
+					this.$refs.uToast.show({
+						title: '评分成功',
+						type: 'success'
+					})
+				}
 			},
 			iconActive() {
 				this.iconOFF = !this.iconOFF
