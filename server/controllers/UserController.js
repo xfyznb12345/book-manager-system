@@ -76,9 +76,7 @@ module.exports = {
     } else {
       const user = await UserService.save({ userName, passWord })
       ctx.result = {
-        userInfo: {
-          id: user
-        },
+        userInfo: user,
         token: jwt.sign({
           data: user._id,
           exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3), //设置 token 过期时间: 3d

@@ -15,9 +15,9 @@
 			<view class="books" v-for="(imageData,imageDataKey ) in imageLists.imgdata" :key="imageDataKey">
 				<view class="books-left" :class="{'books-centre' :imgKey===1 ,'books-right' :imgKey===2 , }" v-for="(img,imgKey ) in imageData.data"
 				 :key="imgKey">
-					<view class="books-box" @click="booksBtn(imageDataKey,imgKey)">
+					<view class="books-box" @click="booksBtn(img._id)">
 						<view class="books-top">
-							<image class="books-img" :src="img.url" />
+							<image class="books-img" :src="$imgUrl[Math.floor(Math.random()*$imgUrl.length)]" />
 						</view>
 						<view class="books-text">
 							<text class="books-title">
@@ -44,10 +44,10 @@
 			}
 		},
 		methods: {
-			booksBtn(imageDataKey, imgKey) {
-				console.log('你点击了第' + imageDataKey + '列的第' + imgKey + '个')
+			booksBtn(imageDataKey) {
+				console.log(imageDataKey)
 				uni.navigateTo({
-					url: '../../pages/booksDetails/booksDetails'
+					url: `../../pages/booksInfo/booksInfo?id=${imageDataKey}`
 				})
 			}
 		}
@@ -57,7 +57,7 @@
 <style scoped lang="scss">
 	$booksimgW:190upx;
 	$booksimgH:220upx;
-	
+
 	.image-list {
 		padding: 0 $bleed;
 	}
@@ -85,6 +85,7 @@
 
 	.books {
 		display: flex;
+		overflow-x: auto;
 	}
 
 	.books-left {
@@ -102,7 +103,10 @@
 	.books-box {
 		width: $booksimgW;
 		display: inline-block;
-		
+	}
+
+	.books-box:not(last-child) {
+		margin-right: 48upx;
 	}
 
 	.books-centre {

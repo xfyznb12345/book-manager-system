@@ -140,18 +140,18 @@ import {
   api_AdDelete,
   api_AdEdit,
   api_bookAdList,
-  iconUrl,
+  iconUrl
 } from '../../../api/api'
 import Cropper from './Cropper'
 const lodash = require('lodash')
 export default {
   props: {
     tabContent: Object,
-    isNew: Boolean,
+    isNew: Boolean
   },
   watch: {
     tabContent: {
-      handler() {
+      handler () {
         if (this.isNew) {
           this.isEdit = true
         } else {
@@ -159,39 +159,39 @@ export default {
           this.imageUrl = this.iconUrl + this.tabContent.image
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   components: {
-    Cropper,
+    Cropper
   },
-  data() {
+  data () {
     return {
-      iconUrl: iconUrl, //地址
-      imageUrl: '', //小图
-      imageUrlBig: [], //大图
-      imageFile: '', //文件流
+      iconUrl: iconUrl, // 地址
+      imageUrl: '', // 小图
+      imageUrlBig: [], // 大图
+      imageFile: '', // 文件流
       isEdit: false,
       ruleForm: {
-        state: 0,
+        state: 0
       },
       rules: {
         title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        book: [{ required: true, message: '请关联图书', trigger: 'blur' }],
+        book: [{ required: true, message: '请关联图书', trigger: 'blur' }]
       },
-      showDialog: false, //裁剪窗口
-      imgUrl: '', //传入的image地址
-      loading: false, //是否为搜索状态
-      options: [], //远程搜索列表
-      visible: false,
+      showDialog: false, // 裁剪窗口
+      imgUrl: '', // 传入的image地址
+      loading: false, // 是否为搜索状态
+      options: [], // 远程搜索列表
+      visible: false
     }
   },
   methods: {
-    //上传图片
-    handleChange(e) {
+    // 上传图片
+    handleChange (e) {
       // 创建一个读取异步文件的对象
       const reader = new FileReader()
-      /* 
+      /*
         将要读的文件对象传入readAsDataURL方法中 该方法会会在读取完毕会返回
         一个data: URL格式的Base64字符串
       */
@@ -203,35 +203,35 @@ export default {
         this.showDialog = true
       }
     },
-    //裁剪完毕
-    closeDialog(file) {
+    // 裁剪完毕
+    closeDialog (file) {
       if (file) {
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = () => {
-          this.ruleForm.image = file //发送给后端的图片
-          this.imageUrl = reader.result //展示的小图
-          this.imageUrlBig = [reader.result] //点击可看大图
+          this.ruleForm.image = file // 发送给后端的图片
+          this.imageUrl = reader.result // 展示的小图
+          this.imageUrlBig = [reader.result] // 点击可看大图
         }
       }
       this.showDialog = false
     },
-    //初始化编辑
-    initEdit() {
-      this.ruleForm = JSON.parse(JSON.stringify(this.tabContent)) //深拷贝
-      //对图书进行处理
+    // 初始化编辑
+    initEdit () {
+      this.ruleForm = JSON.parse(JSON.stringify(this.tabContent)) // 深拷贝
+      // 对图书进行处理
       this.options = [
         {
           value: this.ruleForm.book._id,
-          label: this.ruleForm.book.title,
-        },
+          label: this.ruleForm.book.title
+        }
       ]
       this.ruleForm.book = this.options[0].value
-      //打开编辑开关
+      // 打开编辑开关
       this.isEdit = true
     },
-    //保存
-    submitForm(formName) {
+    // 保存
+    submitForm (formName) {
       if (!this.ruleForm.image) {
         this.$message.warning('请上传图片')
         return
@@ -251,14 +251,14 @@ export default {
           //   formData.append(key,this.ruleForm[key])
           // })
           if (this.isNew) {
-            //新建
+            // 新建
             api_AdAdd(formData).then(() => {
               this.$emit('replace')
               this.$message.success('新建成功')
               this.isEdit = false
             })
           } else {
-            //编辑
+            // 编辑
             api_AdEdit(formData)
               .then(() => {
                 this.$emit('replace')
@@ -274,23 +274,23 @@ export default {
         }
       })
     },
-    //取消编辑
-    cancleEdit() {
+    // 取消编辑
+    cancleEdit () {
       if (this.isNew) {
-        this.$emit('cancleNewTab') //如果新页面取消则需要加新tab删除
+        this.$emit('cancleNewTab') // 如果新页面取消则需要加新tab删除
       }
       this.isEdit = false
     },
-    //删除广告
-    AdDelete() {
+    // 删除广告
+    AdDelete () {
       api_AdDelete(this.ruleForm._id).then(() => {
         this.$message.success('删除成功')
         this.isEdit = false
         this.$emit('deleteAd')
       })
     },
-    //远程搜索
-    remoteMethod(query) {
+    // 远程搜索
+    remoteMethod (query) {
       this.options = []
       this.pageNum = 1
       this.keyWords = query
@@ -301,17 +301,17 @@ export default {
         this.options = []
       }
     },
-    //滚动刷新
-    loadmore() {
+    // 滚动刷新
+    loadmore () {
       this.pageNum++
       this.serchBook(this.keyWords, this.pageNum, 10)
     },
-    //搜索
-    serchBook: lodash.debounce(function(query, pageNum, pageSize) {
+    // 搜索
+    serchBook: lodash.debounce(function (query, pageNum, pageSize) {
       const req = {
         keyWords: query,
         pageNum,
-        pageSize,
+        pageSize
       }
       api_bookAdList(req).then((res) => {
         setTimeout(() => {
@@ -322,8 +322,8 @@ export default {
           this.options.push(...list)
         }, 200)
       })
-    }, 500),
-  },
+    }, 500)
+  }
 }
 </script>
 

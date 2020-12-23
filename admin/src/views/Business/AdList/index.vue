@@ -24,56 +24,56 @@ import { api_AdList } from '../../../api/api'
 import TabContent from './TabContent'
 export default {
   components: {
-    TabContent,
+    TabContent
   },
-  data() {
+  data () {
     return {
-      activeName: '0', //激活页
-      tableTab: [], //tab导航栏信息
-      tabContent: {}, //选中页的内容
-      isNewTab: false, //是否存在新建页面
+      activeName: '0', // 激活页
+      tableTab: [], // tab导航栏信息
+      tabContent: {}, // 选中页的内容
+      isNewTab: false // 是否存在新建页面
     }
   },
   methods: {
-    //添加新Tab
-    addNewTab() {
+    // 添加新Tab
+    addNewTab () {
       if (!this.isNewTab) {
-        this.tableTab.push({ title: 'new Advertisement'})
+        this.tableTab.push({ title: 'new Advertisement' })
         this.activeName = (this.tableTab.length - 1).toString()
         this.isNewTab = true
         this.handleClick()
       }
     },
-    //切换tab页
-    handleClick() {
+    // 切换tab页
+    handleClick () {
       this.tabContent = this.tableTab[this.activeName]
     },
-    //删除广告位
-    deleteAd(){
-      this.tableTab.splice(this.activeName,1)
-      //如果是最后一个被删除
-      if(this.activeName > this.tableTab.length-1) this.activeName = (this.tableTab.length-1).toString()
+    // 删除广告位
+    deleteAd () {
+      this.tableTab.splice(this.activeName, 1)
+      // 如果是最后一个被删除
+      if (this.activeName > this.tableTab.length - 1) this.activeName = (this.tableTab.length - 1).toString()
       this.handleClick()
     },
-    //新页面取消创建
-    cancleNewTab(){
+    // 新页面取消创建
+    cancleNewTab () {
       this.tableTab.pop()
       this.isNewTab = false
       this.activeName = (this.tableTab.length - 1).toString()
       this.handleClick()
     },
-    //初始化表格
-    initTabList() {
-      this.isNewTab && (this.isNewTab =false)
+    // 初始化表格
+    initTabList () {
+      this.isNewTab && (this.isNewTab = false)
       api_AdList().then((res) => {
         this.tableTab = res
         this.tabContent = this.tableTab[this.activeName]
       })
-    },
+    }
   },
-  created() {
+  created () {
     this.initTabList()
-  },
+  }
 }
 </script>
 

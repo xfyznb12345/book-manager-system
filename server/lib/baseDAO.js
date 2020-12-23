@@ -30,8 +30,8 @@ class BaseDAO {
    * @param {Object} back 返回结果筛选
    * @return {Array} 查询结果
    */
-  async findMany (condition,back) {
-    const result = await this.model.find(condition,back)
+  async findMany (condition, back) {
+    const result = await this.model.find(condition, back)
     return result
   }
   /**
@@ -168,6 +168,16 @@ class BaseDAO {
    */
   async update (condition, data, options) {
     const result = await this.model.updateMany(condition, data, options)
+    return result
+  }
+  /**
+   * 未登录用户查兴趣表
+   */
+  async findInterest (condition, back) {
+    const result = await this.model.find(condition, back)
+      .sort({ 'rate': -1 })
+      .populate('book', { title: 1, author: 1, keyWord: 1 })
+      .exec()
     return result
   }
 }

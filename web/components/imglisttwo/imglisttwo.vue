@@ -12,19 +12,19 @@
 				</p>
 			</view>
 			<!-- 图文列表 -->
-			<view class="books" v-for="(information,dataKey) in imgdata.data" :key="dataKey" @click="imageTextBtn(dataKey)">
+			<view class="books" v-for="(information,dataKey) in imgdata.data" :key="dataKey" @click="imageTextBtn(information._id)">
 				<view class="books-img">
-					<image :src="information.url" />
+					<image :src="url[Math.floor((Math.random()*url.length))]" />
 				</view>
 				<view class="books-text">
-					<p class="head">{{information.head}}</p>
+					<p class="head">{{information.title}}</p>
 					<view class="title-box">
 						<p class="title">{{ information.author}}</p>
-						<p class="title text-right">￥{{information.price}}</p>
+						<!-- <p class="title text-right">￥{{information.price}}</p> -->
 					</view>
 					<view class="title-bottom">
-						<p class="title">{{information.title}}</p>
-						<p class="title text-right ">原价：￥{{information.initialize}}</p>
+						<p class="title">{{information.keyWord}}</p>
+						<!-- <p class="title text-right ">原价：￥{{information.initialize}}</p> -->
 					</view>
 				</view>
 			</view>
@@ -38,14 +38,33 @@
 		props: ['imglisttwo'],
 		data() {
 			return {
-
+				url: [
+					"https://s1.ax1x.com/2020/08/12/ajXteS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajjfHS.png",
+					"https://s1.ax1x.com/2020/08/12/ajjHcq.png",
+					"https://s1.ax1x.com/2020/05/25/tpsFDH.png",
+					"https://s1.ax1x.com/2020/08/12/ajvsVU.png",
+					"https://s1.ax1x.com/2020/08/12/ajvTaD.png",
+					"https://s1.ax1x.com/2020/08/12/ajjt6x.png",
+					"https://s1.ax1x.com/2020/08/12/ajzdBV.png",
+					"https://s1.ax1x.com/2020/08/12/avSLRJ.png",
+					'https://s2.ax1x.com/2020/03/05/3THGsU.png',
+					'https://s2.ax1x.com/2020/03/04/35f6C4.png',
+					'https://s2.ax1x.com/2020/03/04/35fs5F.png',
+					'https://s2.ax1x.com/2020/03/04/35fhb6.png',
+					'https://s2.ax1x.com/2020/03/05/3T5pLj.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Ces.png',
+					'https://s2.ax1x.com/2020/03/05/3T5Pwn.png',
+					'https://s2.ax1x.com/2020/03/05/3TH8MT.png'
+				],
 			}
 		},
 		methods: {
 			imageTextBtn(imageTextBtn) {
 			 	console.log('你点击了第' + imageTextBtn + '个')
 				uni.navigateTo({
-					url: '../../pages/booksDetails/booksDetails'
+					url: `../../pages/booksInfo/booksInfo?id=${imageTextBtn}`
 				})
 			}
 		}

@@ -22,6 +22,10 @@ api.register = params => globalRequest(`${apiUrl}/register`, params, 'POST')
 api.login = params => globalRequest(`${apiUrl}/login`, params, 'POST')
 //首页轮播图
 api.adList = params => globalRequest(`${apiUrl}/adList`, params, 'GET')
+//热门好书
+api.fineBook = params => globalRequest(`${apiUrl}/fineBook`,params,'GET')
+//推荐
+api.recommend = params => globalRequest(`${apiUrl}/admin/recommend`,params,'GET')
 //分类列表
 api.category = params => globalRequest(`${apiUrl}/category`, params, 'GET')
 //分类图书列表

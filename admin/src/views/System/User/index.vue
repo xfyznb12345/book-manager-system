@@ -71,78 +71,78 @@ export default {
     Form,
     Table,
     AddUser,
-    PasswordEdit,
+    PasswordEdit
   },
-  data() {
+  data () {
     return {
       optForm: {
-        keyWords: '',
+        keyWords: ''
       },
       optFormLabel: [
         {
-          del:true,
+          del: true,
           model: 'keyWords',
           point: '用户名/姓名/手机号',
-          style: 'width:210px',
-        },
+          style: 'width:210px'
+        }
       ],
-      addDialog: false, //新增框
-      passwordDialog: false, //密码重置框
+      addDialog: false, // 新增框
+      passwordDialog: false, // 密码重置框
       tableData: [],
       tableLabel: [
         {
           prop: '_id',
-          label: 'ID',
+          label: 'ID'
         },
         {
           prop: 'userName',
-          label: '用户名',
+          label: '用户名'
         },
         {
           prop: 'nickName',
-          label: '姓名',
+          label: '姓名'
         },
         {
           prop: 'role',
           label: '所属角色',
-          children:'roleName'
+          children: 'roleName'
         },
         {
           prop: 'phone',
-          label: '手机号',
+          label: '手机号'
         },
         {
           prop: 'email',
-          label: '邮箱',
-        },
+          label: '邮箱'
+        }
       ],
       config: {
-        actionWidth: 200, //操作宽度
+        actionWidth: 200, // 操作宽度
         page: 1,
         pageSize: 15,
-        total: 30,
+        total: 30
       },
-      editForm:{}
+      editForm: {}
     }
   },
   methods: {
-    getTableList() {
-      //form 置空
+    getTableList () {
+      // form 置空
       this.editForm = {}
-      if(this.addDialog) this.addDialog = false
+      if (this.addDialog) this.addDialog = false
       const req = {
         keyWords: this.optForm.keyWords,
         pageNum: this.config.page,
-        pageSize: this.config.pageSize,
+        pageSize: this.config.pageSize
       }
       api_usersList(req).then((res) => {
         this.tableData = res.list
         this.config.total = res.count
       })
     },
-    //编辑
-    handleEdit(row) {
-      if(row.role.roleName==='最高管理员'){
+    // 编辑
+    handleEdit (row) {
+      if (row.role.roleName === '最高管理员') {
         this.$message.error('不可编辑')
         return
       }
@@ -150,33 +150,33 @@ export default {
       this.editForm.role && (this.editForm.role = row.role._id)
       this.addDialog = true
     },
-    async handleDel(row) {
-      if(row.role.roleName==='最高管理员') {
+    async handleDel (row) {
+      if (row.role.roleName === '最高管理员') {
         this.$message.error('最高管理员不可删除')
         return
       }
-      const res  = await api_usersDelete(row._id).catch(err=>{
+      const res = await api_usersDelete(row._id).catch(err => {
         this.$message.error(err.msg)
       })
-      if(res){
+      if (res) {
         this.$message.success('删除成功')
         this.getTableList()
       }
     },
-    //切换pageSize
-    changeSize(pageSize) {
+    // 切换pageSize
+    changeSize (pageSize) {
       this.config.pageSize = pageSize
       this.getTableList()
     },
-    //切换page
-    changePage(page) {
+    // 切换page
+    changePage (page) {
       this.config.page = page
       this.getTableList()
-    },
+    }
   },
-  created() {
+  created () {
     this.getTableList()
-  },
+  }
 }
 </script>
 

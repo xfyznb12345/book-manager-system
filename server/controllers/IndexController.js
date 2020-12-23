@@ -86,10 +86,22 @@ module.exports = {
         result.bookRet = bookRet[0]
       } else {
         result.bookRet = {
-          book:id,
+          book: id,
           collect: false,
           rate: 0
         }
+      }
+    }else{ //如果用户为登录，则需要把该本书的评分做一个汇总并返回
+      const rateVal = await InterestService.findMany({book:id},{rate:1,_id:0})
+      let rate = 0
+      rateVal.forEach(val=>{
+        rate += val.rate
+      })
+      rate = rate / rateVal.length
+      result.bookRet = {
+        book: id,
+        collect: false,
+        rate
       }
     }
     //关键词查出来开始
@@ -163,6 +175,29 @@ module.exports = {
         result.push(val.name)
       }
     })
+    if (!result) {
+      ctx.error = '获取列表失败'
+    } else {
+      ctx.result = result
+    }
+    return next()
+  },
+  /**
+   * 热门好书算法（非常简单粗暴！！！）
+   */
+  'GET /api/fineBook': async (ctx, next) => {
+    // 会给他们推荐收藏量大，评分高的书
+    const condition = {
+      collect: true
+    }
+    const back = {
+      book: 1,
+      _id: 0
+    }
+    const list = await InterestService.findInterest(condition, back)
+    const strings = list.map(item => JSON.stringify(item.book))
+    const removeDupList = [...new Set(strings)]; //也可以使用Array.from(new Set(strings))
+    const result = removeDupList.map((item) => JSON.parse(item))
     if (!result) {
       ctx.error = '获取列表失败'
     } else {
